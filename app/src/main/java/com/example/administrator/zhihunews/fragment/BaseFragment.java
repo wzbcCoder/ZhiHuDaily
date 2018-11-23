@@ -30,12 +30,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = initView();
+        View view = initView(inflater,container,savedInstanceState);
         return view;
     }
 
     //初始化布局, 子类必须实现
-    protected abstract View initView();
+    protected abstract View initView(LayoutInflater inflater, ViewGroup container,
+                                     Bundle savedInstanceState);
 
 
 }
