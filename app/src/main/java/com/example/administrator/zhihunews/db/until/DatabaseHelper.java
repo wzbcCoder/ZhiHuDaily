@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.administrator.zhihunews.db.NewsItem;
-
 /**
  * Created by Administrator on 2018/11/23.
  */
