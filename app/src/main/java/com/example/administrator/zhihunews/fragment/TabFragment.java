@@ -1,45 +1,41 @@
-package com.example.administrator.zhihunews;
+package com.example.administrator.zhihunews.fragment;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
-import com.example.administrator.zhihunews.fragment.NewsListFragment;
-import com.example.administrator.zhihunews.fragment.ViewPageAdapter;
+import com.example.administrator.zhihunews.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.R.attr.data;
-import static android.support.v4.view.ViewPager.*;
-
-public class MainActivity extends AppCompatActivity {
+public class TabFragment extends Fragment {
+    private ListView lv;
+    private SimpleAdapter adapter;
+    private List<Map<String, Object>> list;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tab_layout);
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.tab_listview_item,
-                new String[]{"img", "title", "body"},
-                new int[]{R.id.itemimg, R.id.itemtitle, R.id.itembody});
-        ListView listView = (ListView) findViewById(R.id.tab_listview);
-        listView.setAdapter(adapter);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.tab_layout, container, false);
+        lv = (ListView) view.findViewById(R.id.tab_listview);	//实例化
+        return view;
     }
-
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        adapter = new SimpleAdapter(getActivity(), getData(), R.layout.tab_listview_item,
+                new String[]{"img", "title", "body"},
+                new int[]{R.id.itemimg, R.id.itemtitle, R.id.itembody});      //配置适配器，并获取对应Item中的ID
+        lv.setAdapter(adapter);
+    }
+    //数据的获取@！
     private List<? extends Map<String, ?>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
@@ -66,3 +62,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
