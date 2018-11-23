@@ -4,8 +4,8 @@ import android.content.Context;
 
 /**
 
- * 主要是对数据库操作的工具栏
- */
+ * 使用三层数据库操作此管理类弃用
+ *  */
 public class DbManger {
 
     private static DatabaseHelper mDatabaseHelper;
