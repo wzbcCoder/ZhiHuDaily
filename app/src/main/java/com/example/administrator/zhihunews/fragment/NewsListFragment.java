@@ -22,7 +22,7 @@ public class NewsListFragment extends BaseFragment {
        mView =  inflater.inflate(R.layout.news_list_fragment_layout,container,false);
         return mView;
     }
-    
+
     // 静态工厂方法获取Fragment实例
     public  static  NewsListFragment newInstance(){
         NewsListFragment newsListFragment = new NewsListFragment();
