@@ -15,6 +15,5 @@ public class NewsListFragment extends BaseFragment {
 //    public  static  NewsListFragment newInstance(){
 //        NewsListFragment newsListFragment = new NewsListFragment();
 //
-//
 //    }
 }
