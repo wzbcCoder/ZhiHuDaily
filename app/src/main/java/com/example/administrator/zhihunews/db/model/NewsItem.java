@@ -10,14 +10,27 @@ public class NewsItem {
     private String image;// 图片
     private String title = "title";//标题
     private String type = "type";//类型
+    private String date = "date"; //创建时间
 
 
-    public NewsItem(String gaPreix, int id, String image, String title, String type) {
+    public NewsItem(String gaPreix, int id, String image, String title, String type,String date) {
         this.gaPreix = gaPreix;
         this.id = id;
         this.image = image;
         this.title = title;
         this.type = type;
+        this.date = date;
+    }
+
+    public NewsItem() {
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getGaPreix() {

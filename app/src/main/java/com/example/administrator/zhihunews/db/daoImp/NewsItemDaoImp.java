@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -42,11 +43,14 @@ public class NewsItemDaoImp implements NewsItemDao {
         JSONObject jsonObject;
 
         SQLiteDatabase db = helper.getWritableDatabase();
+        helper.onUpgrade(db,1,1);
         try {
 
             jsonObject = new JSONObject(newsItemDate);
             // 获取stories json 列表
             String stories = jsonObject.get("stories").toString();
+            // 获取date
+            String date = jsonObject.get("date").toString();
 
             JSONArray jsonStories = new JSONArray(stories);
             for (int i = 0; i < jsonStories.length(); i++) {
@@ -63,6 +67,7 @@ public class NewsItemDaoImp implements NewsItemDao {
                 value.put(NewsItemTable.IMAGE, image);
                 value.put(NewsItemTable.TITLE, title);
                 value.put(NewsItemTable.TYPE, type);
+                value.put(NewsItemTable.DATE,date);
                 // 插入重复数据就更新，不是重复数据就添加
                 db.insertWithOnConflict(NewsItemTable.TABLE_NAME, null, value, SQLiteDatabase.CONFLICT_REPLACE);
             }
@@ -75,6 +80,13 @@ public class NewsItemDaoImp implements NewsItemDao {
 
     @Override
     public List<NewsItem> findDate(Date date) {
+        //TODO:zjd 编写findDate
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String stringDate = sdf.format(date);
+        SQLiteDatabase db = helper.getWritableDatabase();
+//        db.query(NewsItemTable.TABLE_NAME,NewsItemTable.)
         return null;
+
+
     }
 }

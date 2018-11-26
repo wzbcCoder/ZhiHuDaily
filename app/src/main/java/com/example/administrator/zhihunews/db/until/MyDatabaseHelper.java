@@ -3,6 +3,9 @@ package com.example.administrator.zhihunews.db.until;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.administrator.zhihunews.db.model.NewsItem;
 
 /**
  * Created by Administrator on 2018/11/23.
@@ -19,7 +22,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             NewsItemTable.IMAGE+" varchar(200)," +
             NewsItemTable.GAPREFIX +" integer,"+
             NewsItemTable.TITLE+" varchar(150)," +
-            NewsItemTable.TYPE+"  integer)";
+            NewsItemTable.TYPE+"  integer)" ;
+//            NewsItemTable.DATE+"  varchar(20))";
     //  新闻细节sql
     final  String CREATE_DETAIL_ITEM_SQL="";
 
@@ -32,6 +36,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        String sql = "ALTER TABLE " + NewsItemTable.TABLE_NAME + " ADD "+NewsItemTable.DATE+" VARCHAR(20) NULL";
+        Log.i("sql", sql);
+        db.execSQL(sql);
     }
 }

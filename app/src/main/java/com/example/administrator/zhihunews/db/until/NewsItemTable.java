@@ -13,4 +13,5 @@ public class NewsItemTable {
     public static final String IMAGE = "image";// 图片
     public static final String TITLE = "title";//标题
     public static final String TYPE = "type";//类型
+    public static final String DATE= "date";// 时间
 }
