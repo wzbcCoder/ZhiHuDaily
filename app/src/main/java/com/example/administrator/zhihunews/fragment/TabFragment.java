@@ -1,10 +1,12 @@
 package com.example.administrator.zhihunews.fragment;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -19,11 +21,13 @@ public class TabFragment extends Fragment {
     private ListView lv;
     private SimpleAdapter adapter;
     private List<Map<String, Object>> list;
+    private LinearLayout head;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_layout, container, false);
+        head = (LinearLayout) inflater.inflate(R.layout.lunbo, container, false);
         lv = (ListView) view.findViewById(R.id.tab_listview);	//实例化
         return view;
     }
