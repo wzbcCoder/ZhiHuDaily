@@ -4,7 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.administrator.zhihunews.db.until.DatabaseHelper;
+//import com.example.administrator.zhihunews.db.until.DatabaseHelper;
+import com.example.administrator.zhihunews.db.until.MyDatabaseHelper;
 import com.example.administrator.zhihunews.fragment.NewsListFragment;
 
 
@@ -12,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager mFragmentManger;
     // Fragment 事务
     FragmentTransaction mFragmentTransaction;
-    DatabaseHelper mMySqliteHelper;
+    MyDatabaseHelper mMySqliteHelper;
     private SQLiteDatabase db;
 
 

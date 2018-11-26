@@ -1,29 +1,23 @@
 package com.example.administrator.zhihunews.fragment;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Printer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.administrator.zhihunews.R;
 import com.example.administrator.zhihunews.app.ClintApplication;
-
+import com.example.administrator.zhihunews.db.daoImp.NewsItemDaoImp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.Inflater;
 
 /**
  * Created by Administrator on 2018/11/23.
@@ -67,8 +61,8 @@ public class NewsListFragment extends BaseFragment {
                     @Override
                     public void onResponse(String response) {
                         // 插入数据库
-
-
+                        NewsItemDaoImp newsItemDaoImp = new NewsItemDaoImp(mActivity);
+                        newsItemDaoImp.addDay(response);
                     }
                 },
                 new Response.ErrorListener() {

@@ -3,7 +3,7 @@ package com.example.administrator.zhihunews.db.model;
 /**
  * Created by Administrator on 2018/11/26.
  */
-
+// 新闻条目实体类
 public class NewsItem {
     private String gaPreix;
     private int id;//唯一id

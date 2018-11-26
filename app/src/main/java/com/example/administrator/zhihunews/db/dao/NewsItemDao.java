@@ -2,6 +2,8 @@ package com.example.administrator.zhihunews.db.dao;
 
 import com.example.administrator.zhihunews.db.model.NewsItem;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,4 +16,6 @@ public interface NewsItemDao {
     public void add(NewsItem newsItem);
     // 添加时间
     public List<NewsItem> findDate(Date date);
+    // 添加某天的数据
+    public void addDay(String newsItemDate);
 }

@@ -8,11 +8,11 @@ import android.content.Context;
  *  */
 public class DbManger {
 
-    private static DatabaseHelper mDatabaseHelper;
+    private static MyDatabaseHelper mDatabaseHelper;
 
-    public static DatabaseHelper getIntance(Context context){
+    public static MyDatabaseHelper getIntance(Context context){
         if(mDatabaseHelper == null){
-            mDatabaseHelper = new DatabaseHelper(context);
+            mDatabaseHelper = new MyDatabaseHelper(context);
         }
         return mDatabaseHelper;
     }
