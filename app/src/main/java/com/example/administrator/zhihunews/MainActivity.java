@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.administrator.zhihunews.db.until.DatabaseHelper;
 import com.example.administrator.zhihunews.db.until.DbManger;
 import com.example.administrator.zhihunews.fragment.NewsListFragment;
+import com.example.administrator.zhihunews.fragment.TabFragment;
 import com.example.administrator.zhihunews.fragment.ViewPageAdapter;
 
 import java.util.ArrayList;
@@ -44,48 +45,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.tab_layout);
-        SimpleAdapter adapter = new SimpleAdapter(this, getData(), R.layout.tab_listview_item,
-                new String[]{"img", "title", "body"},
-                new int[]{R.id.itemimg, R.id.itemtitle, R.id.itembody});
-        ListView listView = (ListView) findViewById(R.id.tab_listview);
-        listView.setAdapter(adapter);
+        setContentView(R.layout.activity_main);
 
+        prepareFragment();
     }
+
+
+
+    // 创建Fragment之前的操作
+     private void prepareFragment() {
+         // 通用的FragmentManager
+         mFragmentManger = getSupportFragmentManager();
+         mFragmentTransaction = getFragmentManager().beginTransaction();
+         NewsListFragment newsListFragment = NewsListFragment.newInstance();
+         TabFragment tabFragment = new TabFragment();
+         mFragmentTransaction.replace(R.id.NewsListFragment, tabFragment);
+         // 提交
+         mFragmentTransaction.commit();
+     }
+
 
     private List<? extends Map<String, ?>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-    
-//         setContentView(R.layout.activity_main);
-//         prepareDatabase();
-//         prepareFragment();
-//     }
-
-//     private void prepareDatabase() {
-//         mMySqliteHelper = DbManger.getIntance(MainActivity.this);
-//         db = mMySqliteHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("ga_prefix",112309);
-//        values.put("id",9702141);
-//        values.put("image","https://pic3.zhimg.com/v2-8350fa5a9aadeb091d239ea1ecb9399a.jpg");
-//        values.put("title","什么样的报表真难看？拿这种好看的比一下恍然大悟");
-//        values.put("type",0);
-//        long rowid = db.insert(NewsItem.TABLE_NAME,null,values);
-//        System.out.println("ddd"+rowid);
-    }
-
-    // 创建Fragment之前的操作
-//     private void prepareFragment(){
-//         // 通用的FragmentManager
-//         mFragmentManger = getSupportFragmentManager();
-//         mFragmentTransaction  = getFragmentManager().beginTransaction();
-//         NewsListFragment newsListFragment = NewsListFragment.newInstance();
-//         mFragmentTransaction.replace(R.id.NewsListFragment,newsListFragment);
-//         // 提交
-//         mFragmentTransaction.commit();
-
-
-//将需要的值传入map中
+        //将需要的值传入map中
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "软院最新公告事项");
         map.put("body", "不知道未来几天有什么最新消息？那就点我查看查看呗");
@@ -106,5 +88,27 @@ public class MainActivity extends AppCompatActivity {
 
         return list;
     }
+//         setContentView(R.layout.activity_main);
+//         prepareDatabase();
+//         prepareFragment();
+//     }
+
+//     private void prepareDatabase() {
+//         mMySqliteHelper = DbManger.getIntance(MainActivity.this);
+//         db = mMySqliteHelper.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put("ga_prefix",112309);
+//        values.put("id",9702141);
+//        values.put("image","https://pic3.zhimg.com/v2-8350fa5a9aadeb091d239ea1ecb9399a.jpg");
+//        values.put("title","什么样的报表真难看？拿这种好看的比一下恍然大悟");
+//        values.put("type",0);
+//        long rowid = db.insert(NewsItem.TABLE_NAME,null,values);
+//        System.out.println("ddd"+rowid);
+
+
+
+
+
+
 
 }
