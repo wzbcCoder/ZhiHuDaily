@@ -22,24 +22,26 @@ import java.util.zip.Inflater;
 public class NewsListFragment extends BaseFragment {
     private ListView mListView;
     private SimpleAdapter mAdapter;
+    private  View mView;
     private List<Map<String, Object>> mList;
-    private View mView;
 
     // 初始化视图
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.tab_layout, container, false);
-        mListView = (ListView) view.findViewById(R.id.tab_listview);	//实例化
-        return mListView;
+        //  应该使用view 去充气
+         mView = inflater.inflate(R.layout.tab_layout, container, false);
+        // 找到里面的listView
+        mListView = (ListView) mView.findViewById(R.id.tab_listview);
+        return mView;
     }
-//    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-////        super.onActivityCreated(savedInstanceState);
-////        mAdapter = new SimpleAdapter(getActivity(), getData(), R.layout.tab_listview_item,
-////                new String[]{"img", "title", "body"},
-////                new int[]{R.id.itemimg, R.id.itemtitle, R.id.itembody});      //配置适配器，并获取对应Item中的ID
-//        mListView.setAdapter(mAdapter);
-//    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mAdapter = new SimpleAdapter(getActivity(), getData(), R.layout.tab_listview_item,
+                new String[]{"img", "title", "body"},
+                new int[]{R.id.itemimg, R.id.itemtitle, R.id.itembody});      //配置适配器，并获取对应Item中的ID
+        mListView.setAdapter(mAdapter);
+    }
     // 静态工厂方法获取Fragment实例
     public  static  NewsListFragment newInstance(){
         NewsListFragment newsListFragment = new NewsListFragment();
