@@ -1,15 +1,25 @@
 package com.example.administrator.zhihunews.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Printer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.administrator.zhihunews.R;
+import com.example.administrator.zhihunews.app.ClintApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,18 +32,19 @@ import java.util.zip.Inflater;
 public class NewsListFragment extends BaseFragment {
     private ListView mListView;
     private SimpleAdapter mAdapter;
-    private  View mView;
+    private View mView;
     private List<Map<String, Object>> mList;
 
     // 初始化视图
     @Override
-    protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //  应该使用view 去充气
-         mView = inflater.inflate(R.layout.tab_layout, container, false);
+        mView = inflater.inflate(R.layout.tab_layout, container, false);
         // 找到里面的listView
         mListView = (ListView) mView.findViewById(R.id.tab_listview);
         return mView;
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -42,15 +53,46 @@ public class NewsListFragment extends BaseFragment {
                 new int[]{R.id.itemimg, R.id.itemtitle, R.id.itembody});      //配置适配器，并获取对应Item中的ID
         mListView.setAdapter(mAdapter);
     }
+
+    // 获取指定日期的新闻标题等
+    private void fetchDaysNewsList(Date date) {
+        // 解析时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        // url构造
+        String url = "http://news.at.zhihu.com/api/4/news/before/" + sdf.format(date);
+        StringRequest mRequest = new StringRequest(Request.Method.GET, url,
+
+                // 响应成功
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // 插入数据库
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        // 响应失败
+                        System.out.println("error ----");
+                    }
+                }
+        );
+       ClintApplication.getmRequestQueue().add(mRequest);
+    }
+
     // 静态工厂方法获取Fragment实例
-    public  static  NewsListFragment newInstance(){
+    public static NewsListFragment newInstance() {
         NewsListFragment newsListFragment = new NewsListFragment();
         return newsListFragment;
     }
-    private List<? extends Map<String, ?>> getData() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-//将需要的值传入map中
+    private List<? extends Map<String, ?>> getData() {
+        Date date = new Date();
+        fetchDaysNewsList(date);
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        //将需要的值传入map中
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "软院最新公告事项");
         map.put("body", "不知道未来几天有什么最新消息？那就点我查看查看呗");

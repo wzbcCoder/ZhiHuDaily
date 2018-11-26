@@ -5,6 +5,8 @@ import android.app.Application;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2018/11/23.
  */
@@ -22,6 +24,5 @@ public class ClintApplication extends Application {
     public static RequestQueue getmRequestQueue() {
         return mRequestQueue;
     }
-
 
 }

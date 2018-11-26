@@ -1,7 +1,5 @@
 package com.example.administrator.zhihunews.db.dao;
 
-import android.provider.ContactsContract;
-
 import com.example.administrator.zhihunews.db.model.NewsItem;
 
 import java.util.Date;
