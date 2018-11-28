@@ -8,12 +8,11 @@ public class NewsItem {
     private String gaPreix;
     private int id;//唯一id
     private String image;// 图片
-    private String title = "title";//标题
-    private String type = "type";//类型
-    private String date = "date"; //创建时间
+    private String title;//标题
+    private String type;//类型
+    private String date ; //创建时间
 
-
-    public NewsItem(String gaPreix, int id, String image, String title, String type,String date) {
+    public NewsItem(String gaPreix, int id, String image, String title, String type, String date) {
         this.gaPreix = gaPreix;
         this.id = id;
         this.image = image;
