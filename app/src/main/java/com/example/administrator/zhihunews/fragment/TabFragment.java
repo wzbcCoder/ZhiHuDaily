@@ -27,8 +27,8 @@ public class TabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_layout, container, false);
-        head = (LinearLayout) inflater.inflate(R.layout.lunbo, container, false);
-        lv = (ListView) view.findViewById(R.id.tab_listview);	//实例化
+        head = (LinearLayout) inflater.inflate(R.layout.main_home_picturecarousel, container, false);
+//        lv = (ListView) view.findViewById(R.id);	//实例化
         return view;
     }
     @Override

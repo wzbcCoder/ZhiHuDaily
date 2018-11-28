@@ -12,12 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".app.ClintApplication">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
+            <!--最初启动-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.BaseActivity">
+
         </activity>
 
     </application>
