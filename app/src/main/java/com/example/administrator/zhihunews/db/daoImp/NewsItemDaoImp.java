@@ -2,6 +2,7 @@ package com.example.administrator.zhihunews.db.daoImp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -67,9 +69,10 @@ public class NewsItemDaoImp implements NewsItemDao {
                 value.put(NewsItemTable.IMAGE, image);
                 value.put(NewsItemTable.TITLE, title);
                 value.put(NewsItemTable.TYPE, type);
-                value.put(NewsItemTable.DATE,date);
+                value.put(NewsItemTable.DATE, date);
                 // 插入重复数据就更新，不是重复数据就添加
-                db.insertWithOnConflict(NewsItemTable.TABLE_NAME, null, value, SQLiteDatabase.CONFLICT_REPLACE);
+                long rowId = db.insertWithOnConflict(NewsItemTable.TABLE_NAME, null, value, SQLiteDatabase.CONFLICT_REPLACE);
+                System.out.println(rowId);
             }
         } catch (Exception e) {
             Log.d("zjd", "parse error:" + e.getMessage());
@@ -80,12 +83,34 @@ public class NewsItemDaoImp implements NewsItemDao {
 
     @Override
     public List<NewsItem> findDate(Date date) {
-        //TODO:zjd 编写findDate
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String stringDate = sdf.format(date);
         SQLiteDatabase db = helper.getWritableDatabase();
-//        db.query(NewsItemTable.TABLE_NAME,NewsItemTable.)
-        return null;
+        String[] columns = new String[]{
+                NewsItemTable.IMAGE,NewsItemTable.ID,NewsItemTable.DATE,
+                NewsItemTable.GAPREFIX,NewsItemTable.TITLE,NewsItemTable.TYPE
+        };
+        String selection = NewsItemTable.DATE + " = " + stringDate;
+        Cursor c = db.query(NewsItemTable.TABLE_NAME, columns, selection, null, null, null, NewsItemTable.DATE + " desc", null);
+        int imageId = c.getColumnIndex(NewsItemTable.IMAGE);
+        int idId = c.getColumnIndex(NewsItemTable.ID);
+        int newDateId = c.getColumnIndex(NewsItemTable.DATE);
+        int titleId = c.getColumnIndex(NewsItemTable.TITLE);
+        int typeId = c.getColumnIndex(NewsItemTable.TYPE);
+        int gaprefixId = c.getColumnIndex(NewsItemTable.GAPREFIX);
+        List<NewsItem> list = new LinkedList<NewsItem>();
+        while (c.moveToNext()) {
+            String image = c.getString(imageId);
+            int id = c.getInt(idId);
+            String gaprefix = c.getString(gaprefixId);
+            String type = c.getString(typeId);
+            String title = c.getString(titleId);
+            String newDate = c.getString(newDateId);
+            list.add(new NewsItem(gaprefix,id,image,title,type,newDate));
+            Log.d("1507", "name: " + image);
+        }
+        return list;
 
 
     }
