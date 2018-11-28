@@ -5,55 +5,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/zzf1"
     >
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/headviewpager"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/zzf1" />
-
-        <LinearLayout
-            android:id="@+id/ll_hottest_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:orientation="horizontal" />
-    </FrameLayout>
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/headviewpager"-->
-        <!--android:background="@drawable/zzf1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="150dp"-->
-        <!--/>-->
-    <!--<LinearLayout-->
-        <!--android:id="@+id/ll_hottest_indicator"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="20dp"-->
-        <!--android:layout_gravity="bottom|right"-->
-        <!--android:layout_marginBottom="5dp"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:gravity="center"-->
-        <!--android:orientation="horizontal" />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:layout_margin="10dp">
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tab_listview"
             android:divider="#00000000"
-            android:dividerHeight="12dp"
-            android:layout_margin="10dp"/>
+            android:dividerHeight="12dp"/>
     </LinearLayout>
 </LinearLayout>
 
