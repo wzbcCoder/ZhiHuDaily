@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class NewsItemDaoImp implements NewsItemDao {
     }
 
     @Override
-    public List<NewsItem> findDate(Date date) {
+    public ArrayList<NewsItem> findDate(Date date) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String stringDate = sdf.format(date);
@@ -98,7 +99,7 @@ public class NewsItemDaoImp implements NewsItemDao {
         int titleId = c.getColumnIndex(NewsItemTable.TITLE);
         int typeId = c.getColumnIndex(NewsItemTable.TYPE);
         int gaprefixId = c.getColumnIndex(NewsItemTable.GAPREFIX);
-        List<NewsItem> list = new LinkedList<NewsItem>();
+        ArrayList<NewsItem> list = new ArrayList<>();
         while (c.moveToNext()) {
             String image = c.getString(imageId);
             int id = c.getInt(idId);
