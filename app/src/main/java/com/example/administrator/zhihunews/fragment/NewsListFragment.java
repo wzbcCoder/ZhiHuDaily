@@ -61,13 +61,8 @@ public class NewsListFragment extends BaseFragment {
     }
 
     private void initData() {
-        mDatas = new ArrayList<>();
-        for (int i = 'A'; i < 'z'; i++) {
-            NewsItem item = new NewsItem();
-            item.setTitle("" + (char) i);
-            item.setImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496110531&di=281ed2731cabceee7c851e5b2ca83a85&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F13%2F15%2F64%2F44c58PICsni_1024.jpg");
-            mDatas.add(item);
-        }
+        mDatas = getData();
+
     }
 
     @Override
@@ -120,29 +115,15 @@ public class NewsListFragment extends BaseFragment {
     }
 
 
-    private List<? extends Map<String, ?>> getData() {
+    private ArrayList<NewsItem> getData() {
         Date date = new Date();
-
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(calendar.DATE, 1);// 将日期向后推一天
         fetchDaysNewsList(calendar.getTime());
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        //将需要的值传入map中
-
         NewsItemDaoImp newsItemDaoImp = new NewsItemDaoImp(getActivity());
-        List<NewsItem> newsList = newsItemDaoImp.findDate(date);
-        for (NewsItem item:newsList
-             ) {
-            System.out.println(item.getTitle());
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("title", item.getDate());
-            map.put("body", item.getTitle());
-            map.put("img", R.drawable.zzf2);
-            list.add(map);
-        }
-
-        return list;
+        ArrayList<NewsItem> newsList = newsItemDaoImp.findDate(date);
+        return newsList;
     }
 }
 
