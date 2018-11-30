@@ -45,7 +45,6 @@ public class NewsItemDaoImp implements NewsItemDao {
         JSONObject jsonObject;
 
         SQLiteDatabase db = helper.getWritableDatabase();
-//        helper.onUpgrade(db,1,1);
         try {
 
             jsonObject = new JSONObject(newsItemDate);
