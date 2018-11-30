@@ -57,6 +57,21 @@ public class NewsListFragment extends BaseFragment {
         mInfoList = (RecyclerView) mActivity.findViewById(R.id.infolist);//绑定RecycleView
         mInfoList.setLayoutManager(new LinearLayoutManager(mActivity));//设置布局管理器，你可以通过这个来决定你是要做一个Listview还是瀑布流
         adapter = new InfoListAdapter(mDatas, mActivity);//初始化适配器
+
+        // 为InfoListAdapter添加监听事件
+        adapter.setOnItemClickListener(new InfoListAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position,int id) {
+                NewsDetailFragment newsDetailFragment = NewsDetailFragment.newInstance(id);
+                MainActivity activity = (MainActivity )getActivity();
+                activity.switchFragment(newsDetailFragment);
+            }
+
+            @Override
+            public void onItemLongClick(int position,int id) {
+                System.out.println(id);
+            }
+        } );
         mInfoList.setAdapter(adapter);//为ReycleView设置适配器
     }
 
