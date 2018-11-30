@@ -1,5 +1,6 @@
 package com.example.administrator.zhihunews.activity;
 import android.app.FragmentTransaction;
+import android.content.ClipData;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
@@ -7,16 +8,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 //import com.example.administrator.zhihunews.db.until.DatabaseHelper;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.administrator.zhihunews.R;
 import com.example.administrator.zhihunews.db.until.MyDatabaseHelper;
 import com.example.administrator.zhihunews.fragment.BaseFragment;
 import com.example.administrator.zhihunews.fragment.NewsListFragment;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
