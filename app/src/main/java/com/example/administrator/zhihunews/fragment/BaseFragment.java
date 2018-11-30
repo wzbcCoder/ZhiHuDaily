@@ -23,6 +23,7 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = getActivity();// 获取所在的activity对象
+
     }
 
     // 初始化Fragment布局

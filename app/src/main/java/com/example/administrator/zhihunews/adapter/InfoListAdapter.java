@@ -54,6 +54,11 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
         return mData.size();
     }
 
+    public static interface OnItemClickListener {
+        void onItemClick(View view);
+        void onItemLongClick(View view);
+    }
+
 
     class InfoViewHolder extends RecyclerView.ViewHolder {
         //此部分我也难以用语言来解释，诸位可以搜索下网上各路大牛的详解

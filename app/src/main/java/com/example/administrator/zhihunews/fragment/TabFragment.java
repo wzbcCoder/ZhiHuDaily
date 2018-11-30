@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/*
+* 弃用
+*
+* */
 public class TabFragment extends Fragment {
     private ListView lv;
     private SimpleAdapter adapter;
