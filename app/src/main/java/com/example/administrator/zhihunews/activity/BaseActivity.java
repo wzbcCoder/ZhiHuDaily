@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);//设置为actionbar
         switch (type){
             case 1:
-                toolbar.setNavigationIcon(R.drawable.layer);
+                toolbar.setNavigationIcon(R.drawable.menu);
                 break;
             case 2:
                 toolbar.setNavigationIcon(R.drawable.back);
