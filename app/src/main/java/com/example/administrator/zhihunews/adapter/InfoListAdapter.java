@@ -32,6 +32,7 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
     // 充气一个viewholder
     @Override
     public InfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (headView!=null && viewType==TYPE_HEADER) return new InfoViewHolder(headView);
         holder=new InfoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.info_item,parent,false));
 
         return holder;
@@ -40,6 +41,8 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
     @Override
     public void onBindViewHolder(InfoViewHolder holder, int position) {
         //此方法内可以对布局中的控件进行操作
+        if (getItemViewType(position)==TYPE_HEADER) return;
+        final int pos=getRealPosition(holder);
 
         holder.title.setText(mData.get(position).getTitle());// 获取标题
 
@@ -73,5 +76,31 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
         }
     }
 
+    public static final int TYPE_HEADER = 0;//显示headvuiew
+    public static final int TYPE_NORMAL = 1;//显示普通的item
+    private View headView;//这是Banner
+
+    public void setHeadView(View headView){
+        this.headView=headView;
+        notifyItemInserted(0);
+    }
+
+    public View getHeadView(){
+        return headView;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (headView==null)
+            return TYPE_NORMAL;
+        if (position==0)
+            return TYPE_HEADER;
+        return TYPE_NORMAL;
+    }
+
+    private int getRealPosition(RecyclerView.ViewHolder holder) {
+        int position=holder.getLayoutPosition();
+        return headView==null? position:position-1;
+    }
 
 }
