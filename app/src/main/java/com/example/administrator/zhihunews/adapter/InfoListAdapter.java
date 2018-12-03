@@ -35,7 +35,7 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
     @Override
     public InfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (headView != null && viewType == TYPE_HEADER) return new InfoViewHolder(headView);
-        mHolder = new InfoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.info_item, parent, false));
+        mHolder = new InfoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.fragment_base_swipe_list, parent, false));
         return mHolder;
     }
 
@@ -99,7 +99,7 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.item_title);
             img = (ImageView) itemView.findViewById(R.id.item_image);
-            headTitle = (TextView) itemView.findViewById(R.id.item_headtitle);
+//            headTitle = (TextView) itemView.findViewById(R.id.item_headtitle);
         }
     }
 

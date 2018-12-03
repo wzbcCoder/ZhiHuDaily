@@ -154,6 +154,7 @@ public class NewsListFragment extends BaseFragment {
     }
 
     private void initView() {
+
         mInfoList = (RecyclerView) mActivity.findViewById(R.id.infolist);//绑定RecycleView
         mInfoList.setLayoutManager(new LinearLayoutManager(mActivity));//设置布局管理器，你可以通过这个来决定你是要做一个Listview还是瀑布流
         adapter = new InfoListAdapter(mDatas, mActivity);//初始化适配器
@@ -172,7 +173,85 @@ public class NewsListFragment extends BaseFragment {
                 System.out.println(id);
             }
         } );
-        mInfoList.setAdapter(adapter);//为ReycleView设置适配器
+
+
+
+        titles=new ArrayList<>();
+        ids=new ArrayList<>();
+        images=new ArrayList<>();
+
+        bannerList = new ArrayList<>();
+
+        mQueue = Volley.newRequestQueue(mActivity);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://news-at.zhihu.com/api/4/news/latest", null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    //解析banner中的数据
+                    JSONArray topinfos = response.getJSONArray("top_stories");
+                    Log.d("TAG", "onResponse: "+topinfos);
+                    for (int i = 0; i < topinfos.length(); i++) {
+                        JSONObject item = topinfos.getJSONObject(i);
+                        NewsItem item1 = new NewsItem();
+                        item1.setImage(item.getString("image"));
+                        item1.setTitle(item.getString("title"));
+                        item1.setId(item.getInt("id"));
+                        bannerList.add(item1);
+                        titles.add(item1.getTitle());
+                        images.add(item1.getImage());
+                        ids.add(item1.getId());
+                    }
+
+                    View header = LayoutInflater.from(mActivity).inflate(R.layout.headview,null);
+                    BGABanner banner = (BGABanner) header.findViewById(R.id.banner);
+                    //绑定banner
+                    banner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
+
+
+                        @Override
+                        public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
+                            Glide.with(NewsListFragment.this)
+                                    .load(model)
+                                    .centerCrop()
+                                    .dontAnimate()
+                                    .into(itemView);
+                        }
+                    });
+                    banner.setDelegate(new BGABanner.Delegate() {
+                        @Override
+                        public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+                            //此处可设置banner子项的点击事件
+
+                        }
+                    });
+                    banner.setData(images, titles);
+                    adapter.setHeadView(header);
+
+
+
+                    mInfoList.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(jsonObjectRequest);
+
+
+
+
+
+
+
+        //为ReycleView设置适配器
     }
 
     private void initData() {
@@ -184,8 +263,8 @@ public class NewsListFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
+
         initView();
-        initBanner();
     }
     //    @Override
 //    public void onActivityCreated(Bundle savedInstanceState) {
@@ -230,7 +309,7 @@ public class NewsListFragment extends BaseFragment {
         return newsListFragment;
     }
 
-
+    // 从数据库里面拿到最新一天的数据
     private ArrayList<NewsItem> getData() {
         Date date = new Date();
         Calendar calendar = new GregorianCalendar();
