@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -19,6 +20,9 @@ import com.example.administrator.zhihunews.db.daoImp.NewsItemDaoImp;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +36,7 @@ public class NewsDetailFragment extends BaseFragment {
     private WebView mDetail;
     // 新闻的id 从外部传参
     private int mNewsId;
+    private String htmlNewsDetail;
     private final String tag = "NewsDetailFragment";
 
     @Override
@@ -43,6 +48,7 @@ public class NewsDetailFragment extends BaseFragment {
 
     private void initView() {
         mDetail = (WebView) mActivity.findViewById(R.id.web_view_detail);
+
     }
 
     private void initData() {
@@ -64,8 +70,10 @@ public class NewsDetailFragment extends BaseFragment {
                     @Override
                     public void onResponse(String response) {
                         HashMap<String,String> newsHashMap= parseNewsDetail(response);
-                        String htmlNewsDetail = matchDetailHTML(newsHashMap);
-
+                        htmlNewsDetail = matchDetailHTML(newsHashMap);
+                        String mimeType = "text/html";
+                        String enCoding = "utf-8";
+                        mDetail.loadDataWithBaseURL(null,htmlNewsDetail,mimeType,enCoding,null);
 
                     }
                 },
@@ -92,10 +100,12 @@ public class NewsDetailFragment extends BaseFragment {
             String image = (String) newsDetailJsonObject.get("image");
             String js = (String) ((JSONArray) newsDetailJsonObject.get("css")).get(0);
             String title = (String) newsDetailJsonObject.get("title");
+            String imageSource = (String) newsDetailJsonObject.get("image_source");
             newsHashMap.put("css",css);
             newsHashMap.put("body",body);
             newsHashMap.put("image",image);
             newsHashMap.put("js",js);
+            newsHashMap.put("imageSource",imageSource);
             newsHashMap.put("title",title);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -106,13 +116,39 @@ public class NewsDetailFragment extends BaseFragment {
     // 读取newsHashMap中的数据 转换为html
     private  String  matchDetailHTML(HashMap<String,String> newsHashMap){
         //TODO:添加对hashMap的解析 然后拼接成HTML
-        return newsHashMap.get("body");
+//        System.out.println(newsHashMap.get("body"));
+        String css = newsHashMap.get("css");
+        String title = newsHashMap.get("title");
+        String image = newsHashMap.get("image");
+        String imageSource = newsHashMap.get("imageSource");
+        String headLine =
+                "<div class=\"img-wrap\">\n" +
+                "<h1 class=\"headline-title\">"+title+"</h1>\n" +
+                "\n" +
+                "\n" +
+                "<span class=\"img-source\">"+imageSource+"</span>\n" +
+                "\n" +
+                "\n" +
+                "<img src=\""+image+"\" alt=\"\">\n" +
+                "<div class=\"img-mask\"></div>\n" +
+                "</div>\n";
+        String headers = "<link rel=\"stylesheet\" href=\""+css+"\"> <script src=\"http://static.daily.zhihu.com/js/modernizr-2.6.2.min.js\"></script>";
+        String body = "<body>"+newsHashMap.get("body")+"</body>";
+        Document doc = Jsoup.parse(body);
+        Element headImage = doc.select("div.headline").first();
+        Element head = doc.select("head").first();
+        head.append(headers);
+        headImage.append(headLine);
+        doc.select("div.img-place-holder").remove();
+        System.out.println(doc.toString());
+        return doc.toString();
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData();
+
         initView();
+        initData();
     }
 
     public static NewsDetailFragment newInstance(int newsId) {
