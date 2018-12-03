@@ -73,7 +73,7 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
 
         //获取数据长度
 
-//        return mData.size();
+//        return_self mData.size();
         //llh 更改
         return headView==null? mData.size():mData.size()+1;
     }

@@ -163,6 +163,8 @@ public class MainActivity extends BaseActivity {
 
 
         mFragmentTransaction.replace(R.id.NewsListFragment, fragment);
+        // 加入到回退栈当中
+        mFragmentTransaction.addToBackStack(null);
         // 提交
         mFragmentTransaction.commit();
     }
