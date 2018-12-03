@@ -6,7 +6,7 @@ package com.example.administrator.zhihunews.db.until;
 
 public class NewsItemTable {
     public static final String DATABASE_NAME = "zhihu.db";//数据库名称
-    public static final int DATABASE_VERSION = 2;//数据库版本号
+    public static final int DATABASE_VERSION = 4;//数据库版本号
     public static final String TABLE_NAME= "news_item"; // 表名
     public static final String GAPREFIX = "ga_prefix";
     public static final String ID = "id";//唯一id
