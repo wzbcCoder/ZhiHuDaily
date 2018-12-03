@@ -3,6 +3,7 @@ package com.example.administrator.zhihunews.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -45,21 +46,22 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
         if (getItemViewType(position) == TYPE_HEADER) return;
         final int pos = getRealPosition(holder);
 
-        holder.title.setText(mData.get(position).getTitle());// 获取标题
-        final int id = mData.get(position).getId();
+        holder.title.setText(mData.get(pos).getTitle());// 获取标题
+        //FIXED 切换成real pos 就可以解决报错
+        final int id = mData.get(pos).getId();
         //从NewsItem中获取图片 使用加载库加载
-        Glide.with(mContext).load(mData.get(position).getImage()).into(holder.img);
+        Glide.with(mContext).load(mData.get(pos).getImage()).into(holder.img);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(position,id);
+                    mOnItemClickListener.onItemClick(pos,id);
                 }
             });
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    mOnItemClickListener.onItemLongClick(position,id);
+                    mOnItemClickListener.onItemLongClick(pos,id);
                     return false;
                 }
             });

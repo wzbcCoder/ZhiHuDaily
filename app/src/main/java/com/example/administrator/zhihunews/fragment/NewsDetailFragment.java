@@ -115,7 +115,6 @@ public class NewsDetailFragment extends BaseFragment {
 
     // 读取newsHashMap中的数据 转换为html
     private  String  matchDetailHTML(HashMap<String,String> newsHashMap){
-        //TODO:添加对hashMap的解析 然后拼接成HTML
 //        System.out.println(newsHashMap.get("body"));
         String css = newsHashMap.get("css");
         String title = newsHashMap.get("title");
@@ -152,6 +151,7 @@ public class NewsDetailFragment extends BaseFragment {
     }
 
     public static NewsDetailFragment newInstance(int newsId) {
+        //TODO(ZJD):添加返回操作
         NewsDetailFragment fragment = new NewsDetailFragment();
         Bundle args = new Bundle();
         args.putInt("NewsId", newsId);
