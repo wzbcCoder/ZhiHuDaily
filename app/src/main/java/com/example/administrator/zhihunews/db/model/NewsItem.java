@@ -71,4 +71,6 @@ public class NewsItem {
     public void setType(String type) {
         this.type = type;
     }
+
+
 }

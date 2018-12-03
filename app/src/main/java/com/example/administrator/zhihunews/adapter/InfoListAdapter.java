@@ -71,7 +71,9 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
 
         //获取数据长度
 
-        return mData.size();
+//        return mData.size();
+        //llh 更改
+        return headView==null? mData.size():mData.size()+1;
     }
     //  回调事件接口
 
@@ -103,7 +105,7 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
 
     public static final int TYPE_HEADER = 0;//显示headvuiew
     public static final int TYPE_NORMAL = 1;//显示普通的item
-    private View headView;//这是Banner
+    private View headView;//这家伙就是Banner
 
     public void setHeadView(View headView) {
         this.headView = headView;
