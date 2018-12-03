@@ -1,4 +1,6 @@
 package com.example.administrator.zhihunews.activity;
+
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +21,8 @@ import com.example.administrator.zhihunews.R;
 import com.example.administrator.zhihunews.adapter.InfoListAdapter;
 import com.example.administrator.zhihunews.db.model.NewsItem;
 import com.example.administrator.zhihunews.db.until.MyDatabaseHelper;
+import com.example.administrator.zhihunews.fragment.BaseFragment;
+import com.example.administrator.zhihunews.fragment.NewsDetailFragment;
 import com.example.administrator.zhihunews.fragment.NewsListFragment;
 
 import org.json.JSONArray;
@@ -36,6 +40,7 @@ public class MainActivity extends BaseActivity {
     FragmentTransaction mFragmentTransaction;
     MyDatabaseHelper mMySqliteHelper;
     private SQLiteDatabase db;
+
 
     //NewsItem为自定义的，在NewsItem.java中实现
     private ArrayList<NewsItem> bannerList;//banner控件
@@ -130,46 +135,37 @@ public class MainActivity extends BaseActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        prepareFragment();
+        NewsListFragment newsListFragment = NewsListFragment.newInstance();
+        switchFragment(newsListFragment);
         initView();
     }
 
     private void initView() {
-        setTitle("首页",1);//设置标题内容，该方法继承自父类，所以再写一次
+        setTitle("首页", 1);//设置标题内容，该方法继承自父类，所以再写一次
     }
 
+    private void perpareFragmentManager() {
+        // 通用的FragmentManager
+        mFragmentManger = getSupportFragmentManager();
+        mFragmentTransaction = getFragmentManager().beginTransaction();
+    }
 
     // 创建Fragment之前的操作
-     private void prepareFragment() {
-         // 通用的FragmentManager
-         mFragmentManger = getSupportFragmentManager();
-         mFragmentTransaction = getFragmentManager().beginTransaction();
-         NewsListFragment newsListFragment = NewsListFragment.newInstance();
-//         TabFragment tabFragment = new TabFragment();
-         mFragmentTransaction.replace(R.id.NewsListFragment, newsListFragment);
-         // 提交
-         mFragmentTransaction.commit();
-     }
+    public void switchFragment(Fragment fragment) {
+
+        // 准备FragmentManager
+        perpareFragmentManager();
 
 
-//     private void prepareDatabase() {
-//         mMySqliteHelper = DbManger.getIntance(MainActivity.this);
-//         db = mMySqliteHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("ga_prefix",112309);
-//        values.put("id",9702141);
-//        values.put("image","https://pic3.zhimg.com/v2-8350fa5a9aadeb091d239ea1ecb9399a.jpg");
-//        values.put("title","什么样的报表真难看？拿这种好看的比一下恍然大悟");
-//        values.put("type",0);
-//        long rowid = db.insert(NewsItem.TABLE_NAME,null,values);
-//        System.out.println("ddd"+rowid);
-
-
-
+        mFragmentTransaction.replace(R.id.NewsListFragment, fragment);
+        // 提交
+        mFragmentTransaction.commit();
+    }
 
 
 }
