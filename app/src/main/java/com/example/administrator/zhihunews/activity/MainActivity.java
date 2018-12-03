@@ -54,12 +54,6 @@ public class MainActivity extends BaseActivity {
         setTitle("首页", 1);//设置标题内容，该方法继承自父类，所以再写一次
     }
 
-    //    // 跳转到新闻细节fragment
-//    public void switchFragment(NewsDetailFragment newsDetailFragment){
-//        mFragmentTransaction.replace(R.id.NewsListFragment, newsDetailFragment);
-//        // 提交
-//        mFragmentTransaction.commit();
-//    }
     private void perpareFragmentManager() {
         // 通用的FragmentManager
         mFragmentManger = getSupportFragmentManager();
