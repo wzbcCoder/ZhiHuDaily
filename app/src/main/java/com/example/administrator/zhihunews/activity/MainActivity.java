@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
-        setTitle("首页", 1);//设置标题内容，该方法继承自父类，所以再写一次
+        setTitle("", 1);//设置标题内容，该方法继承自父类，所以再写一次
     }
 
     private void perpareFragmentManager() {

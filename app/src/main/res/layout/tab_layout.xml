@@ -43,7 +43,7 @@
     android:id="@+id/infolist"
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 </android.support.v7.widget.RecyclerView>
