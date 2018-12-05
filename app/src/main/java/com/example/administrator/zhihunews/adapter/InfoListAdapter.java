@@ -75,6 +75,7 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
 
 //        return_self mData.size();
         //llh 更改
+
         return headView==null? mData.size():mData.size()+1;
     }
     //  回调事件接口

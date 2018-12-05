@@ -44,10 +44,10 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 
 public class NewsListFragment extends BaseFragment {
-//    private ListView mListView;
+    //    private ListView mListView;
 //    private SimpleAdapter mAdapter;
     private View mView;
-//    private List<Map<String, Object>> mList;
+    //    private List<Map<String, Object>> mList;
     private ArrayList<NewsItem> mDatas;
     private RecyclerView mInfoList;
     private InfoListAdapter adapter;
@@ -64,9 +64,9 @@ public class NewsListFragment extends BaseFragment {
 
     private void initBanner() {
         //初始化banner
-        titles=new ArrayList<>();
-        ids=new ArrayList<>();
-        images=new ArrayList<>();
+        titles = new ArrayList<>();
+        ids = new ArrayList<>();
+        images = new ArrayList<>();
 
         bannerList = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class NewsListFragment extends BaseFragment {
                 try {
                     //解析banner中的数据
                     JSONArray topinfos = response.getJSONArray("top_stories");
-                    Log.d("TAG", "onResponse: "+topinfos);
+                    Log.d("TAG", "onResponse: " + topinfos);
                     for (int i = 0; i < topinfos.length(); i++) {
                         JSONObject item = topinfos.getJSONObject(i);
                         NewsItem item1 = new NewsItem();
@@ -141,8 +141,6 @@ public class NewsListFragment extends BaseFragment {
     ///
 
 
-
-
     // 初始化视图
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,25 +158,24 @@ public class NewsListFragment extends BaseFragment {
         adapter = new InfoListAdapter(mDatas, mActivity);//初始化适配器
 
         // 为InfoListAdapter添加监听事件
-        adapter.setOnItemClickListener(new InfoListAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new InfoListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position,int id) {
+            public void onItemClick(int position, int id) {
                 NewsDetailFragment newsDetailFragment = NewsDetailFragment.newInstance(id);
-                MainActivity activity = (MainActivity )getActivity();
+                MainActivity activity = (MainActivity) getActivity();
                 activity.switchFragment(newsDetailFragment);
             }
 
             @Override
-            public void onItemLongClick(int position,int id) {
+            public void onItemLongClick(int position, int id) {
                 System.out.println(id);
             }
-        } );
+        });
 
 
-
-        titles=new ArrayList<>();
-        ids=new ArrayList<>();
-        images=new ArrayList<>();
+        titles = new ArrayList<>();
+        ids = new ArrayList<>();
+        images = new ArrayList<>();
 
         bannerList = new ArrayList<>();
 
@@ -189,7 +186,7 @@ public class NewsListFragment extends BaseFragment {
                 try {
                     //解析banner中的数据
                     JSONArray topinfos = response.getJSONArray("top_stories");
-                    Log.d("TAG", "onResponse: "+topinfos);
+                    Log.d("TAG", "onResponse: " + topinfos);
                     for (int i = 0; i < topinfos.length(); i++) {
                         JSONObject item = topinfos.getJSONObject(i);
                         NewsItem item1 = new NewsItem();
@@ -202,7 +199,7 @@ public class NewsListFragment extends BaseFragment {
                         ids.add(item1.getId());
                     }
 
-                    View header = LayoutInflater.from(mActivity).inflate(R.layout.headview,null);
+                    View header = LayoutInflater.from(mActivity).inflate(R.layout.headview, null);
                     BGABanner banner = (BGABanner) header.findViewById(R.id.banner);
                     //绑定banner
                     banner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
@@ -228,7 +225,6 @@ public class NewsListFragment extends BaseFragment {
                     adapter.setHeadView(header);
 
 
-
                     mInfoList.setAdapter(adapter);
 
                 } catch (JSONException e) {
@@ -246,16 +242,12 @@ public class NewsListFragment extends BaseFragment {
         mQueue.add(jsonObjectRequest);
 
 
-
-
-
-
-
         //为ReycleView设置适配器
     }
 
     private void initData() {
-        mDatas = getData();
+        getData();
+
 
     }
 
@@ -264,7 +256,7 @@ public class NewsListFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initData();
 
-        initView();
+
     }
     //    @Override
 //    public void onActivityCreated(Bundle savedInstanceState) {
@@ -276,7 +268,7 @@ public class NewsListFragment extends BaseFragment {
 //    }
 
     // 获取指定日期的新闻标题等
-    private void fetchDaysNewsList(Date date) {
+    private void fetchDaysNewsList(final Date date) {
         // 解析时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         // url构造
@@ -290,6 +282,12 @@ public class NewsListFragment extends BaseFragment {
                         // 插入数据库
                         NewsItemDaoImp newsItemDaoImp = new NewsItemDaoImp(mActivity);
                         newsItemDaoImp.addDay(response);
+                        Calendar calendar = new GregorianCalendar();
+                        calendar.setTime(date);
+                        calendar.add(calendar.DATE, -1);
+                        Date date1 = calendar.getTime();
+                        mDatas = newsItemDaoImp.findDate(date1);
+                        initView();
                     }
                 },
                 new Response.ErrorListener() {
@@ -310,15 +308,16 @@ public class NewsListFragment extends BaseFragment {
     }
 
     // 从数据库里面拿到最新一天的数据
-    private ArrayList<NewsItem> getData() {
+    private void getData() {
         Date date = new Date();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(calendar.DATE, 1);// 将日期向后推一天
-        fetchDaysNewsList(calendar.getTime());
-        NewsItemDaoImp newsItemDaoImp = new NewsItemDaoImp(getActivity());
-        ArrayList<NewsItem> newsList = newsItemDaoImp.findDate(date);
-        return newsList;
+        fetchDaysNewsList(calendar.getTime());  // 从接口异步获取数据
+
+//        NewsItemDaoImp newsItemDaoImp = new NewsItemDaoImp(getActivity());
+//        ArrayList<NewsItem> newsList = newsItemDaoImp.findDate(date);
+
     }
 }
 
