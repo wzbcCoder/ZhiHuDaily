@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.administrator.zhihunews.R;
+import com.example.administrator.zhihunews.activity.BaseActivity;
 import com.example.administrator.zhihunews.app.ClintApplication;
 import com.example.administrator.zhihunews.db.daoImp.NewsItemDaoImp;
 
@@ -41,14 +42,12 @@ public class NewsDetailFragment extends BaseFragment {
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         mView = inflater.inflate(R.layout.news_detail_fragment_layout, container, false);
         return mView;
     }
 
     private void initView() {
         mDetail = (WebView) mActivity.findViewById(R.id.web_view_detail);
-
     }
 
     private void initData() {
@@ -145,7 +144,6 @@ public class NewsDetailFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initView();
         initData();
     }

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.administrator.zhihunews.activity.BaseActivity;
+
 /**
  * Created by Administrator on 2018/11/23.
  */
@@ -16,6 +18,7 @@ public abstract class BaseFragment extends Fragment {
 
     //这个activity就是MainActivity
     public Activity mActivity;
+    public BaseActivity baseActivity;
 
 
     // Fragment被创建
