@@ -31,6 +31,9 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
         this.mContext = context;
     }
 
+    public void setmData(ArrayList<NewsItem> mData) {
+        this.mData = mData;
+    }
 
     // 充气一个viewholder
     @Override

@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.ExecutionException;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -62,84 +65,6 @@ public class NewsListFragment extends BaseFragment {
 
     private RequestQueue mQueue;
 
-    private void initBanner() {
-        //初始化banner
-        titles = new ArrayList<>();
-        ids = new ArrayList<>();
-        images = new ArrayList<>();
-
-        bannerList = new ArrayList<>();
-
-        mQueue = Volley.newRequestQueue(mActivity);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://news-at.zhihu.com/api/4/news/latest", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    //解析banner中的数据
-                    JSONArray topinfos = response.getJSONArray("top_stories");
-                    Log.d("TAG", "onResponse: " + topinfos);
-                    for (int i = 0; i < topinfos.length(); i++) {
-                        JSONObject item = topinfos.getJSONObject(i);
-                        NewsItem item1 = new NewsItem();
-                        item1.setImage(item.getString("image"));
-                        item1.setTitle(item.getString("title"));
-                        item1.setId(item.getInt("id"));
-                        bannerList.add(item1);
-                        titles.add(item1.getTitle());
-                        images.add(item1.getImage());
-                        ids.add(item1.getId());
-                    }
-
-
-                    setHeader(mInfoList, images, titles, ids);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        mQueue.add(jsonObjectRequest);
-
-
-    }
-
-    private void setHeader(RecyclerView view, ArrayList<String> urls, ArrayList<String> titles, final ArrayList<Integer> ids) {
-        View header = LayoutInflater.from(mActivity).inflate(R.layout.headview, view, false);
-        //找到banner所在的布局
-        BGABanner banner = (BGABanner) header.findViewById(R.id.banner);
-        //绑定banner
-        banner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
-
-
-            @Override
-            public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-                Glide.with(NewsListFragment.this)
-                        .load(model)
-                        .centerCrop()
-                        .dontAnimate()
-                        .into(itemView);
-            }
-        });
-        banner.setDelegate(new BGABanner.Delegate() {
-            @Override
-            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
-                //此处可设置banner子项的点击事件
-
-            }
-        });
-        banner.setData(urls, titles);
-        adapter.setHeadView(header);//向适配器中添加banner
-    }
-
-    ///
-
 
     // 初始化视图
     @Override
@@ -148,16 +73,42 @@ public class NewsListFragment extends BaseFragment {
         mView = inflater.inflate(R.layout.tab_layout, container, false);
         // 找到里面的listView
 //        mListView = (ListView) mView.findViewById(R.id.tab_listview);
+
         return mView;
     }
 
-    private void initView() {
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        titles = new ArrayList<>();
+        ids = new ArrayList<>();
+        images = new ArrayList<>();
+        bannerList = new ArrayList<>();
+        mQueue = Volley.newRequestQueue(mActivity);
         mInfoList = (RecyclerView) mActivity.findViewById(R.id.infolist);//绑定RecycleView
         mInfoList.setLayoutManager(new LinearLayoutManager(mActivity));//设置布局管理器，你可以通过这个来决定你是要做一个Listview还是瀑布流
-        adapter = new InfoListAdapter(mDatas, mActivity);//初始化适配器
+        // 添加滑动到底部的监听
+        mInfoList.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                // 如果滑动到底部
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(mActivity, "Last", Toast.LENGTH_LONG).show();
 
-        // 为InfoListAdapter添加监听事件
+                }
+            }
+        });
+        initData();
+        //抓取最上方的新闻
+        fetchLeastHeaderNews();
+
+    }
+
+    // 将数据放入InfoListAdapter中
+    private void addDataToAdapter() {
+        adapter = new InfoListAdapter(mDatas, mActivity);//初始化适配器
         adapter.setOnItemClickListener(new InfoListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, int id) {
@@ -173,13 +124,11 @@ public class NewsListFragment extends BaseFragment {
         });
 
 
-        titles = new ArrayList<>();
-        ids = new ArrayList<>();
-        images = new ArrayList<>();
 
-        bannerList = new ArrayList<>();
-
-        mQueue = Volley.newRequestQueue(mActivity);
+        //为ReycleView设置适配器
+    }
+    //抓取最上方的新闻
+    private void fetchLeastHeaderNews(){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://news-at.zhihu.com/api/4/news/latest", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -223,8 +172,6 @@ public class NewsListFragment extends BaseFragment {
                     });
                     banner.setData(images, titles);
                     adapter.setHeadView(header);
-
-
                     mInfoList.setAdapter(adapter);
 
                 } catch (JSONException e) {
@@ -240,37 +187,22 @@ public class NewsListFragment extends BaseFragment {
             }
         });
         mQueue.add(jsonObjectRequest);
-
-
-        //为ReycleView设置适配器
     }
-
     private void initData() {
-        getData();
-
-
+        // 获取最新一天的数据
+        Date date = new Date();
+        mDatas = new ArrayList<>();
+        getData(date);
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initData();
 
 
-    }
-    //    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        mAdapter = new SimpleAdapter(getActivity(), getData(), R.layout.tab_listview_item,
-//                new String[]{"img", "title", "body"},
-//                new int[]{R.id.itemimg, R.id.itemtitle, R.id.itembody});      //配置适配器，并获取对应Item中的ID
-//        mListView.setAdapter(mAdapter);
-//    }
 
     // 获取指定日期的新闻标题等
     private void fetchDaysNewsList(final Date date) {
         // 解析时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
         // url构造
         String url = "http://news.at.zhihu.com/api/4/news/before/" + sdf.format(date);
         StringRequest mRequest = new StringRequest(Request.Method.GET, url,
@@ -286,8 +218,13 @@ public class NewsListFragment extends BaseFragment {
                         calendar.setTime(date);
                         calendar.add(calendar.DATE, -1);
                         Date date1 = calendar.getTime();
-                        mDatas = newsItemDaoImp.findDate(date1);
-                        initView();
+
+                        for (NewsItem item:newsItemDaoImp.findDate(date1)
+                             ) {
+                            mDatas.add(item);
+                        }
+//                        mDatas = mDatas
+                        addDataToAdapter();
                     }
                 },
                 new Response.ErrorListener() {
@@ -308,16 +245,12 @@ public class NewsListFragment extends BaseFragment {
     }
 
     // 从数据库里面拿到最新一天的数据
-    private void getData() {
-        Date date = new Date();
+    private void getData(Date date) {
+
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(calendar.DATE, 1);// 将日期向后推一天
-        fetchDaysNewsList(calendar.getTime());  // 从接口异步获取数据
-
-//        NewsItemDaoImp newsItemDaoImp = new NewsItemDaoImp(getActivity());
-//        ArrayList<NewsItem> newsList = newsItemDaoImp.findDate(date);
-
+        fetchDaysNewsList(calendar.getTime());  // 从接口异步获取数
     }
 }
 
