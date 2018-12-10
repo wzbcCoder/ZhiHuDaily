@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HeaderViewListAdapter;
@@ -33,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,8 +97,23 @@ public class NewsListFragment extends BaseFragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 // 如果滑动到底部
                 if (!recyclerView.canScrollVertically(1)) {
-                    Toast.makeText(mActivity, "Last", Toast.LENGTH_LONG).show();
-
+                    // 从recyclerView中获取layoutManager实例
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+                    int itemCount = linearLayoutManager.getItemCount()-1;
+                    int lastIndex = itemCount-1;
+                    NewsItem lastItem = mDatas.get(lastIndex);
+                    String stringDate = lastItem.getDate();
+                    Date date = null;
+                    try {
+                        date = (new SimpleDateFormat("yyyyMMdd")).parse(stringDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    fetchDaysNewsList(date);
+//                    Toast.makeText(mActivity, ""+date.toString(), Toast.LENGTH_LONG).show();
+//                    LinearLayoutManager mLinearLayoutManager= new LinearLayoutManager(mActivity);
+//                    int visibleItemCount = mLinearLayoutManager.getChildCount();
+//                     Toast.makeText(mActivity, ""+visibleItemCount, Toast.LENGTH_LONG).show();
                 }
             }
         });
