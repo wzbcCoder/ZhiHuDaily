@@ -141,7 +141,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         NewsListFragment newsListFragment = NewsListFragment.newInstance();
-        switchFragment(newsListFragment);
+        perpareFragmentManager();
+        mFragmentTransaction.replace(R.id.NewsListFragment, newsListFragment);
+
+
+        // 提交
+        mFragmentTransaction.commit();
         initView();
     }
 
