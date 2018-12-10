@@ -155,6 +155,11 @@ public class MainActivity extends BaseActivity {
         mFragmentTransaction = getFragmentManager().beginTransaction();
     }
 
+    @Override
+    public void setTitle(String title, int type) {
+        super.setTitle(title, type);
+    }
+
     // 创建Fragment之前的操作
     public void switchFragment(Fragment fragment) {
 

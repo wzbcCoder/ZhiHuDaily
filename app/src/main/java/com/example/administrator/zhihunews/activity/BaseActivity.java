@@ -1,5 +1,6 @@
 package com.example.administrator.zhihunews.activity;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,16 +33,25 @@ public class BaseActivity extends AppCompatActivity {
                 toolbar.setNavigationIcon(R.drawable.layer);
                 break;
             case 2:
-                toolbar= (Toolbar) findViewById(R.id.toolbartwo);
+                toolbar= (Toolbar) findViewById(R.id.toolbart);
                 toolbar.setTitleTextColor(Color.WHITE);//标题字体颜色
                 toolbar.setTitle(title);
                 setSupportActionBar(toolbar);//设置为actionbar
                 toolbar.setNavigationIcon(R.drawable.back);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                    }
+                });
                 break;
         }
 
 
     }
 
+    public void changelike(){
+
+    }
 
 }

@@ -17,7 +17,22 @@
     android:layout_height="match_parent"
     tools:context="com.example.administrator.zhihunews.activity.MainActivity">
     <!--导入别的文件中的布局-->
-    <include layout="@layout/toolbar"/>
+    <!--<include layout="@layout/toolbar"/>-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:text="首页"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </android.support.v7.widget.Toolbar>
     <FrameLayout
     android:id="@+id/NewsListFragment"
     android:layout_width="match_parent"
