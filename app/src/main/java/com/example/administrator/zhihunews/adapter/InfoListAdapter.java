@@ -30,6 +30,9 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
         this.mData = data;
         this.mContext = context;
     }
+    public InfoListAdapter(Context context){
+        this.mContext = context;
+    }
 
     public void setmData(ArrayList<NewsItem> mData) {
         this.mData = mData;

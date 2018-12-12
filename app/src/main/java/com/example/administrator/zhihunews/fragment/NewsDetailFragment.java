@@ -63,7 +63,7 @@ public class NewsDetailFragment extends BaseFragment {
     private void fetchNewsDetail() {
         // 细节新闻的地址
         String url = "http://news-at.zhihu.com/api/4/news/" + mNewsId;
-        System.out.println(url);
+//        System.out.println(url);
         StringRequest mRequest = new StringRequest(Request.Method.GET, url,
 
                 // 响应成功
@@ -83,7 +83,7 @@ public class NewsDetailFragment extends BaseFragment {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         // 响应失败
-                        System.out.println("error ----");
+//                        System.out.println("error ----");
                     }
                 }
         );
@@ -140,7 +140,7 @@ public class NewsDetailFragment extends BaseFragment {
         head.append(headers);
         headImage.append(headLine);
         doc.select("div.img-place-holder").remove();
-        System.out.println(doc.toString());
+//        System.out.println(doc.toString());
         return doc.toString();
     }
     @Override

@@ -34,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,7 +120,8 @@ public class NewsListFragment extends BaseFragment {
         });
         initData();
         //抓取最上方的新闻
-        fetchLeastHeaderNews();
+//        fetchLeastHeaderNews();
+
 
     }
 
@@ -136,7 +138,7 @@ public class NewsListFragment extends BaseFragment {
 
             @Override
             public void onItemLongClick(int position, int id) {
-                System.out.println(id);
+//                System.out.println(id);
             }
         });
 
@@ -242,6 +244,12 @@ public class NewsListFragment extends BaseFragment {
                         }
 //                        mDatas = mDatas
                         addDataToAdapter();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                        String dataFormat=sdf.format(date1);
+                        String curDate = sdf.format(new Date());
+                        if (dataFormat.equals(curDate)){
+                            fetchLeastHeaderNews();
+                        }
                     }
                 },
                 new Response.ErrorListener() {

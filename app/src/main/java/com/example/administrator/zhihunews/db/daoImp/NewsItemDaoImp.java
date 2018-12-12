@@ -32,7 +32,7 @@ public class NewsItemDaoImp implements NewsItemDao {
     MyDatabaseHelper helper = null;
 
     public NewsItemDaoImp(Context context) {
-        helper = new MyDatabaseHelper(context);
+        helper = MyDatabaseHelper.getInstance(context);
 
     }
 
@@ -72,7 +72,7 @@ public class NewsItemDaoImp implements NewsItemDao {
                 value.put(NewsItemTable.DATE, date);
                 // 插入重复数据就更新，不是重复数据就添加
                 long rowId = db.insertWithOnConflict(NewsItemTable.TABLE_NAME, null, value, SQLiteDatabase.CONFLICT_REPLACE);
-                System.out.println(rowId);
+//                System.out.println(rowId);
             }
         } catch (Exception e) {
             Log.d("zjd", "parse error:" + e.getMessage());
@@ -110,6 +110,7 @@ public class NewsItemDaoImp implements NewsItemDao {
             list.add(new NewsItem(gaprefix,id,image,title,type,newDate));
             Log.d("1507", "name: " + image);
         }
+        db.close();
         return list;
 
 

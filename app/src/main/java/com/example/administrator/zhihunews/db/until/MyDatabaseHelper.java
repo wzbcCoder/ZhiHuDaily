@@ -13,6 +13,17 @@ import com.example.administrator.zhihunews.db.model.NewsItem;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
+    // 使用单例模式 保证项目运行的时候是一个唯一对象
+    private  static MyDatabaseHelper mInstance = null;
+
+    public synchronized static MyDatabaseHelper getInstance(Context context){
+        if (mInstance == null){
+            return  new MyDatabaseHelper(context);
+        }
+        else{
+            return mInstance;
+        }
+    }
     public MyDatabaseHelper(Context context) {
         super(context, NewsItemTable.DATABASE_NAME, null, NewsItemTable.DATABASE_VERSION);
     }
