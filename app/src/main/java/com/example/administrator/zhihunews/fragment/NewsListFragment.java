@@ -29,6 +29,7 @@ import com.example.administrator.zhihunews.adapter.InfoListAdapter;
 import com.example.administrator.zhihunews.app.ClintApplication;
 import com.example.administrator.zhihunews.db.daoImp.NewsItemDaoImp;
 import com.example.administrator.zhihunews.db.model.NewsItem;
+import com.example.administrator.zhihunews.decoration.SectionDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,13 +112,35 @@ public class NewsListFragment extends BaseFragment {
                         e.printStackTrace();
                     }
                     fetchDaysNewsList(date);
-//                    Toast.makeText(mActivity, ""+date.toString(), Toast.LENGTH_LONG).show();
-//                    LinearLayoutManager mLinearLayoutManager= new LinearLayoutManager(mActivity);
-//                    int visibleItemCount = mLinearLayoutManager.getChildCount();
-//                     Toast.makeText(mActivity, ""+visibleItemCount, Toast.LENGTH_LONG).show();
+
                 }
             }
         });
+        mInfoList.addItemDecoration(new SectionDecoration(mActivity, new SectionDecoration.DecorationCallback() {
+            @Override
+            public long getGroupId(int position) {
+                String stringDate = mDatas.get(position).getDate();
+                int days = 0;
+                try {
+                    Date date = (new SimpleDateFormat("yyyyMMdd")).parse(stringDate);
+                    // 计算时间差
+                    days = (int) ((new Date().getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(days);
+                return days;
+            }
+
+            @Override
+            public String getGroupFirstLine(int position) {
+
+                return mDatas.get(position).getDate();
+            }
+        }));
+
+
+
         initData();
         //抓取最上方的新闻
 //        fetchLeastHeaderNews();

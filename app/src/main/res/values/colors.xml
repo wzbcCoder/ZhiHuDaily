@@ -8,4 +8,5 @@
     <color name="white">#fff</color>
     <color name="listbg">#d4d3d3</color>
     <color name="red">#f2141b</color>
+    <dimen name="dd_dimen">40dp</dimen>
 </resources>
