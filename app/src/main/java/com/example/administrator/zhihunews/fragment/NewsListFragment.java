@@ -128,7 +128,7 @@ public class NewsListFragment extends BaseFragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                System.out.println(days);
+//                System.out.println(days);
                 return days;
             }
 
@@ -177,7 +177,7 @@ public class NewsListFragment extends BaseFragment {
                 try {
                     //解析banner中的数据
                     JSONArray topinfos = response.getJSONArray("top_stories");
-                    Log.d("TAG", "onResponse: " + topinfos);
+//                    Log.d("TAG", "onResponse: " + topinfos);
                     for (int i = 0; i < topinfos.length(); i++) {
                         JSONObject item = topinfos.getJSONObject(i);
                         NewsItem item1 = new NewsItem();
