@@ -93,24 +93,26 @@ public class NewsListFragment extends BaseFragment {
         mInfoList = (RecyclerView) mActivity.findViewById(R.id.infolist);//绑定RecycleView
         mInfoList.setLayoutManager(new LinearLayoutManager(mActivity));//设置布局管理器，你可以通过这个来决定你是要做一个Listview还是瀑布流
         // 添加滑动到底部的监听
-        mInfoList.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        mInfoList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 // 如果滑动到底部
                 if (!recyclerView.canScrollVertically(1)) {
                     // 从recyclerView中获取layoutManager实例
-                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
-                    int itemCount = linearLayoutManager.getItemCount()-1;
-                    int lastIndex = itemCount-1;
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int itemCount = linearLayoutManager.getItemCount() - 1;
+                    int lastIndex = itemCount - 1;
                     NewsItem lastItem = mDatas.get(lastIndex);
                     String stringDate = lastItem.getDate();
+
                     Date date = null;
                     try {
                         date = (new SimpleDateFormat("yyyyMMdd")).parse(stringDate);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
                     fetchDaysNewsList(date);
 
                 }
@@ -140,7 +142,6 @@ public class NewsListFragment extends BaseFragment {
         }));
 
 
-
         initData();
         //抓取最上方的新闻
 //        fetchLeastHeaderNews();
@@ -166,11 +167,11 @@ public class NewsListFragment extends BaseFragment {
         });
 
 
-
         //为ReycleView设置适配器
     }
+
     //抓取最上方的新闻
-    private void fetchLeastHeaderNews(){
+    private void fetchLeastHeaderNews() {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://news-at.zhihu.com/api/4/news/latest", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -230,14 +231,13 @@ public class NewsListFragment extends BaseFragment {
         });
         mQueue.add(jsonObjectRequest);
     }
+
     private void initData() {
         // 获取最新一天的数据
         Date date = new Date();
         mDatas = new ArrayList<>();
         getData(date);
     }
-
-
 
 
     // 获取指定日期的新闻标题等
@@ -261,16 +261,16 @@ public class NewsListFragment extends BaseFragment {
                         calendar.add(calendar.DATE, -1);
                         Date date1 = calendar.getTime();
 
-                        for (NewsItem item:newsItemDaoImp.findDate(date1)
-                             ) {
+                        for (NewsItem item : newsItemDaoImp.findDate(date1)
+                                ) {
                             mDatas.add(item);
                         }
 //                        mDatas = mDatas
                         addDataToAdapter();
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-                        String dataFormat=sdf.format(date1);
+                        String dataFormat = sdf.format(date1);
                         String curDate = sdf.format(new Date());
-                        if (dataFormat.equals(curDate)){
+                        if (dataFormat.equals(curDate)) {
                             fetchLeastHeaderNews();
                         }
                     }
