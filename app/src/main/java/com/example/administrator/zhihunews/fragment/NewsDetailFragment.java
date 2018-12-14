@@ -2,6 +2,7 @@ package com.example.administrator.zhihunews.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SoundEffectConstants;
@@ -55,11 +56,22 @@ public class NewsDetailFragment extends BaseFragment {
 
     private void initView() {
         mDetail = (WebView) mActivity.findViewById(R.id.web_view_detail);
+
     }
 
     private void initData() {
         mNewsId = getArguments().getInt("NewsId");
-
+        //  找到评论的图片
+        commentsImg = (ImageView) mActivity.findViewById(R.id.commentspic);
+        // 给评论图片加监听
+        commentsImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity)mActivity;
+                CommentsFragment commentsFragment =CommentsFragment.newInstance(mNewsId);
+                mainActivity.switchFragment(commentsFragment);
+            }
+        });
 
         Log.d(tag, "news id is  " + mNewsId);
         fetchNewsDetail();
@@ -209,9 +221,6 @@ public class NewsDetailFragment extends BaseFragment {
         return fragment;
     }
 
-    public void buttonImgCommentspic(int num){
-        commentsImg = (ImageView) mActivity.findViewById(R.id.commentspic);
 
-    }
 
 }
