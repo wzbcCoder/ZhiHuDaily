@@ -9,7 +9,7 @@
         android:background="@color/colorPrimary"
         android:layout_height="?attr/actionBarSize">
         <LinearLayout
-            android:layout_marginLeft="220dp"
+            android:layout_marginLeft="200dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
