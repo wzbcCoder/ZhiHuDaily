@@ -23,7 +23,9 @@ import java.util.zip.Inflater;
 
 public class CommentAdapter extends BaseAdapter {
     public ArrayList<Comment> commentList;
-    public CommentAdapter(ArrayList<Comment> commentList) {
+    public CommentAdapter(Context context,ArrayList<Comment> commentList) {
+
+        
         this.commentList = commentList;
     }
 
