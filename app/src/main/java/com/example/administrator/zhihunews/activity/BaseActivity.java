@@ -11,8 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.administrator.zhihunews.R;
+import com.example.administrator.zhihunews.decoration.SectionDecoration;
 
 import org.jsoup.Connection;
 
@@ -22,7 +26,15 @@ import org.jsoup.Connection;
 
 public class BaseActivity extends AppCompatActivity {
     public Toolbar toolbar;
+    public Toolbar toolbart;
     public ClipData.Item item;
+    public boolean aBoolean = true;
+    private SectionDecoration sectionDecoration;
+    private RelativeLayout relativeLayout;
+    private LinearLayout linearLayout;
+    private TextView indextextView;
+
+
     /**
      *
      * @param title 标题栏标题
@@ -66,16 +78,31 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void clickmoon(MenuItem item) {
+        sectionDecoration.aBoolean = false;
         toolbar= (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(Color.BLACK);
-        UiUtils.switchAppTheme(BaseActivity.this);
+        toolbart= (Toolbar) findViewById(R.id.toolbart);
+        toolbar.setBackgroundColor(Color.rgb(242,241,241));
+        toolbart.setBackgroundColor(Color.rgb(242,241,241));
+        relativeLayout = (RelativeLayout) findViewById(R.id.index);
+        relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
+        linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+        linearLayout.setBackgroundColor(Color.rgb(108,108,108));
+        indextextView = (TextView) findViewById(R.id.item_title);
+        indextextView.setBackgroundColor(Color.rgb(206,205,205));
     }
 
     public void clickson(MenuItem item) {
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+        sectionDecoration.aBoolean = true;
         toolbar= (Toolbar) findViewById(R.id.toolbar);
+        toolbart= (Toolbar) findViewById(R.id.toolbart);
         toolbar.setBackgroundColor(Color.rgb(63,81,181));
-
+        toolbart.setBackgroundColor(Color.rgb(63,81,181));
+        relativeLayout = (RelativeLayout) findViewById(R.id.index);
+        relativeLayout.setBackgroundColor(Color.rgb(242,241,241));
+        linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+        linearLayout.setBackgroundColor(Color.WHITE);
+        indextextView = (TextView) findViewById(R.id.item_title);
+        indextextView.setBackgroundColor(Color.rgb(206,205,205));
     }
 
 //    private int theme = 0;

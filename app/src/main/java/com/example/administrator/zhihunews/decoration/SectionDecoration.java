@@ -12,6 +12,8 @@ import android.text.TextPaint;
 import android.view.View;
 
 import com.example.administrator.zhihunews.R;
+import com.example.administrator.zhihunews.activity.BaseActivity;
+import com.example.administrator.zhihunews.activity.MainActivity;
 import com.example.administrator.zhihunews.adapter.PinnedHeaderAdapter;
 import com.example.administrator.zhihunews.db.model.NewsItem;
 
@@ -28,19 +30,32 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
     private int topGap;
     private Paint.FontMetrics fontMetrics;
     private DecorationCallback callback;
+    public boolean aBoolean = true;
 
     public SectionDecoration(Context context,DecorationCallback decorationCallback) {
+
         // 获取资源
         Resources res = context.getResources();
         // 设置样式
         this.callback = decorationCallback;
         paint = new Paint();
-        paint.setColor(res.getColor(R.color.white));
+        //TODO:该颜色
+        if (aBoolean){
+            paint.setColor(res.getColor(R.color.listbg));
+        }else {
+            paint.setColor(res.getColor(R.color.listbgc));
+        }
+//        paint.setColor(res.getColor(R.color.white));
         textPaint = new TextPaint();
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(40);
-        textPaint.setColor(Color.BLACK);
+        if(aBoolean){
+            textPaint.setColor(Color.BLACK);
+        }else{
+            textPaint.setColor(Color.WHITE);
+        }
+//        textPaint.setColor(Color.BLACK);
         textPaint.getFontMetrics(fontMetrics);
         textPaint.setTextAlign(Paint.Align.LEFT);
         fontMetrics = new Paint.FontMetrics();
@@ -117,8 +132,8 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
                 if (position == 0 || isFirstInGroup(position)) {
                     float top = view.getTop() - topGap;
                     float bottom = view.getTop();
-                    c.drawRect(left, top, right, bottom, paint);//绘制红色矩形
-                    c.drawText(textLine, left+50, bottom, textPaint);//绘制文本
+                    c.drawRect(left, top, right, bottom, paint);//绘制白色矩形
+                    c.drawText(textLine, left+50, bottom-20, textPaint);//绘制文本
                 }
             }
 

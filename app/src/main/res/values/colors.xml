@@ -3,10 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="listbgc">#f2e3e8</color>
+    <color name="listbgc">#434343</color>
+    <color name="listbgccard">#6c6c6c</color>
+    <color name="listbgccardtext">#cecdcd</color>
     <color name="black">#151414</color>
     <color name="white">#fff</color>
-    <color name="listbg">#d4d3d3</color>
+    <color name="listbg">#f2f1f1</color>
     <color name="red">#f2141b</color>
     <color name="dark_moon">#464545</color>
     <color name="dark_moon_text">#d2d1d1</color>
