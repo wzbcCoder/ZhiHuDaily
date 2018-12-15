@@ -29,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
     public Toolbar toolbart;
     public ClipData.Item item;
     public boolean aBoolean = true;
-    private SectionDecoration sectionDecoration;
+
     private RelativeLayout relativeLayout;
     private LinearLayout linearLayout;
     private TextView indextextView;
@@ -74,36 +74,71 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
-    public void clickmoon(MenuItem item) {
-        sectionDecoration.aBoolean = false;
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        toolbart= (Toolbar) findViewById(R.id.toolbart);
-        toolbar.setBackgroundColor(Color.rgb(242,241,241));
-        toolbart.setBackgroundColor(Color.rgb(242,241,241));
-        relativeLayout = (RelativeLayout) findViewById(R.id.index);
-        relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
-        linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
-        linearLayout.setBackgroundColor(Color.rgb(108,108,108));
-        indextextView = (TextView) findViewById(R.id.item_title);
-        indextextView.setBackgroundColor(Color.rgb(206,205,205));
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.i_son:
+                SectionDecoration.aBoolean = true;
+                toolbar = (Toolbar) findViewById(R.id.toolbar);
+                toolbart = (Toolbar) findViewById(R.id.toolbart);
+                toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
+                toolbart.setBackgroundColor(Color.rgb(63, 81, 181));
+                relativeLayout = (RelativeLayout) findViewById(R.id.index);
+                relativeLayout.setBackgroundColor(Color.rgb(242, 241, 241));
+                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+                linearLayout.setBackgroundColor(Color.WHITE);
+                indextextView = (TextView) findViewById(R.id.item_title);
+                indextextView.setBackgroundColor(Color.rgb(206, 205, 205));
+                break;
+            case R.id.i_moon:
+                SectionDecoration.aBoolean = false;
+                toolbar= (Toolbar) findViewById(R.id.toolbar);
+                toolbart= (Toolbar) findViewById(R.id.toolbart);
+                toolbar.setBackgroundColor(Color.rgb(242,241,241));
+                toolbart.setBackgroundColor(Color.rgb(242,241,241));
+                relativeLayout = (RelativeLayout) findViewById(R.id.index);
+                relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
+                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+                linearLayout.setBackgroundColor(Color.rgb(108,108,108));
+                indextextView = (TextView) findViewById(R.id.item_title);
+                indextextView.setBackgroundColor(Color.rgb(206,205,205));
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
-    public void clickson(MenuItem item) {
-        sectionDecoration.aBoolean = true;
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        toolbart= (Toolbar) findViewById(R.id.toolbart);
-        toolbar.setBackgroundColor(Color.rgb(63,81,181));
-        toolbart.setBackgroundColor(Color.rgb(63,81,181));
-        relativeLayout = (RelativeLayout) findViewById(R.id.index);
-        relativeLayout.setBackgroundColor(Color.rgb(242,241,241));
-        linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
-        linearLayout.setBackgroundColor(Color.WHITE);
-        indextextView = (TextView) findViewById(R.id.item_title);
-        indextextView.setBackgroundColor(Color.rgb(206,205,205));
-    }
+//    public void clickmoon(MenuItem menuItem) {
+//        sectionDecoration.aBoolean = false;
+//        toolbar= (Toolbar) findViewById(R.id.toolbar);
+//        toolbart= (Toolbar) findViewById(R.id.toolbart);
+//        toolbar.setBackgroundColor(Color.rgb(242,241,241));
+//        toolbart.setBackgroundColor(Color.rgb(242,241,241));
+//        relativeLayout = (RelativeLayout) findViewById(R.id.index);
+//        relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
+//        linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+//        linearLayout.setBackgroundColor(Color.rgb(108,108,108));
+//        indextextView = (TextView) findViewById(R.id.item_title);
+//        indextextView.setBackgroundColor(Color.rgb(206,205,205));
+//    }
+//
+//    public void clickson(MenuItem menuItem) {
+//        sectionDecoration.aBoolean = true;
+//        toolbar= (Toolbar) findViewById(R.id.toolbar);
+//        toolbart= (Toolbar) findViewById(R.id.toolbart);
+//        toolbar.setBackgroundColor(Color.rgb(63,81,181));
+//        toolbart.setBackgroundColor(Color.rgb(63,81,181));
+//        relativeLayout = (RelativeLayout) findViewById(R.id.index);
+//        relativeLayout.setBackgroundColor(Color.rgb(242,241,241));
+//        linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+//        linearLayout.setBackgroundColor(Color.WHITE);
+//        indextextView = (TextView) findViewById(R.id.item_title);
+//        indextextView.setBackgroundColor(Color.rgb(206,205,205));
+//    }
 
 //    private int theme = 0;
 //

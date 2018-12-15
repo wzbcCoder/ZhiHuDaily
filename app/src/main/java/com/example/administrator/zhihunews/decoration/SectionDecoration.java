@@ -30,7 +30,7 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
     private int topGap;
     private Paint.FontMetrics fontMetrics;
     private DecorationCallback callback;
-    public boolean aBoolean = true;
+    public static boolean aBoolean = true;
 
     public SectionDecoration(Context context,DecorationCallback decorationCallback) {
 
