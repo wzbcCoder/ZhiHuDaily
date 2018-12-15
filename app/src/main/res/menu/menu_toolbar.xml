@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:onClick="clickmoon"
+    android:id="@+id/i_moon"
+    android:title="夜间模式">
+</item>
+    <item
+        android:onClick="clickson"
+        android:id="@+id/i_son"
+        android:title="白天模式">
+    </item>
+
+</menu>
