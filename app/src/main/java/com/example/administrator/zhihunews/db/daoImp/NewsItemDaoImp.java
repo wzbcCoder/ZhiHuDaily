@@ -108,7 +108,7 @@ public class NewsItemDaoImp implements NewsItemDao {
             String title = c.getString(titleId);
             String newDate = c.getString(newDateId);
             list.add(new NewsItem(gaprefix,id,image,title,type,newDate));
-            Log.d("1507", "name: " + image);
+//            Log.d("1507", "name: " + image);
         }
         db.close();
         return list;

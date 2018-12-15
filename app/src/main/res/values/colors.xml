@@ -10,4 +10,5 @@
     <color name="red">#f2141b</color>
     <color name="dark_moon">#464545</color>
     <color name="dark_moon_text">#d2d1d1</color>
+    <dimen name="dd_dimen">32dp</dimen>
 </resources>
