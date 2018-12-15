@@ -39,19 +39,23 @@ public class CommentsFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        addData();
+
         super.onCreate(savedInstanceState);
+
     }
 
+    // onstart 在 oncreateView 之后执行
+    // 可以加载数据
     @Override
     public void onStart() {
         super.onStart();
+        addData();
     }
+
     public void addData(){
         NewsId =  getArguments().getInt("NewsId");
         fetchComment();
-        commentAdapter=new CommentAdapter(commentList);
-        //从数据库中获取数据
+
     }
     private void fetchComment(){
         //  创建一个requests请求
@@ -60,17 +64,21 @@ public class CommentsFragment extends BaseFragment {
             public void onResponse(JSONObject response) {
 
                 try {
+                    commentList = new ArrayList<>();
                     JSONArray comments = response.getJSONArray("comments");
                     for (int i= 0 ;i<comments.length();i++){
                        JSONObject comment =  comments.getJSONObject(i);
                         Comment comment1 = new Comment();
                         comment1.setAuthor(comment.getString("author"));
                         comment1.setAvatar(comment.getString("avatar"));
-                        comment1.setContext(comment.getString("context"));
-                        comment1.setTime(comment.getLong("time"));
+                        comment1.setContent(comment.getString("content"));
+                        comment1.setTime(comment.getInt("time"));
                         comment1.setLikes(comment.getInt("likes"));
                         commentList.add(comment1);
                     }
+                    commentAdapter=new CommentAdapter(commentList,mActivity);
+                    // 给listView 设置是配置
+                    listView.setAdapter(commentAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -101,9 +109,10 @@ public class CommentsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comment, container, false);
-        ListView list = (ListView) view.findViewById(R.id.comment_list);
-        listView.setAdapter(commentAdapter);
-        return super.onCreateView(inflater, container, savedInstanceState);
+         listView = (ListView) view.findViewById(R.id.comment_list);
+//         list.setAdapter(commentAdapter);
+        //
+        return view;
     }
 
 

@@ -7,14 +7,14 @@ package com.example.administrator.zhihunews.db.model;
 public class Comment {
     private String author;
     private String avatar;
-    private String context;
-    private Long time;
+    private String content;
+    private int time;
     private int likes;
 
-    public Comment(String author, String avatar, String context, Long time,int likes) {
+    public Comment(String author, String avatar, String context, int time,int likes) {
         this.author = author;
         this.avatar = avatar;
-        this.context = context;
+        this.content = content;
         this.time = time;
         this.likes=likes;
     }
@@ -37,19 +37,19 @@ public class Comment {
         this.avatar = avatar;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setContent(String context) {
+        this.content = content;
     }
 
-    public Long getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
