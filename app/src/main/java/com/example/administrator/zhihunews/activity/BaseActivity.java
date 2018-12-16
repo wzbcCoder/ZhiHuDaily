@@ -79,9 +79,9 @@ public class BaseActivity extends AppCompatActivity {
 
     public void clickson(MenuItem item) {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(Color.rgb(63,81,181));
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
+    }
 
 
 //    private int theme = 0;

@@ -11,7 +11,7 @@ public class Comment {
     private int time;
     private int likes;
 
-    public Comment(String author, String avatar, String context, int time,int likes) {
+    public Comment(String author, String avatar, String content, int time,int likes) {
         this.author = author;
         this.avatar = avatar;
         this.content = content;
@@ -41,7 +41,7 @@ public class Comment {
         return content;
     }
 
-    public void setContent(String context) {
+    public void setContent(String content) {
         this.content = content;
     }
 
