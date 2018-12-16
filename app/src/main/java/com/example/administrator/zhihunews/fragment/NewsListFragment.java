@@ -63,7 +63,7 @@ public class NewsListFragment extends BaseFragment {
 
     private ArrayList<String> titles;//存放banner中的标题
 
-    private ArrayList<String> images;//存放banner中的图片
+    private ArrayList<String> images;//存放banner中的图片kkuyy
 
     private ArrayList<Integer> ids;//存放每一项的id
 

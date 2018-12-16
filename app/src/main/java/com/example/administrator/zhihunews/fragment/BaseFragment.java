@@ -31,9 +31,9 @@ public abstract class BaseFragment extends Fragment {
     // 初始化Fragment布局
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = initView(inflater,container,savedInstanceState);
-        return view;
+                Bundle savedInstanceState) {
+            View view = initView(inflater,container,savedInstanceState);
+            return view;
     }
 
     //初始化布局, 子类必须实现

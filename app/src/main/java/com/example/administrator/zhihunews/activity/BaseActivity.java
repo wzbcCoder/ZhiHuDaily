@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.TextViewCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Button;
 
 import com.example.administrator.zhihunews.R;
@@ -22,6 +27,7 @@ import org.jsoup.Connection;
 
 public class BaseActivity extends AppCompatActivity {
     public Toolbar toolbar;
+
     public ClipData.Item item;
     /**
      *
@@ -56,8 +62,8 @@ public class BaseActivity extends AppCompatActivity {
                 break;
         }
 
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,7 +82,7 @@ public class BaseActivity extends AppCompatActivity {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.rgb(63,81,181));
 
-    }
+
 
 //    private int theme = 0;
 //
