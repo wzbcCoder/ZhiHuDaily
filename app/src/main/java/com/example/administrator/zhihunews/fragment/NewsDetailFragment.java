@@ -141,7 +141,7 @@ public class NewsDetailFragment extends BaseFragment {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         // 响应失败
-                        System.out.println("error ----");
+//                        System.out.println("error ----");
                     }
                 }
         );
