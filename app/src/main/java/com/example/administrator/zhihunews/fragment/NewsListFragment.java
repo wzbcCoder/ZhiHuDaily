@@ -258,21 +258,25 @@ public class NewsListFragment extends BaseFragment {
                         newsItemDaoImp.addDay(response);
                         Calendar calendar = new GregorianCalendar();
                         calendar.setTime(date);
+
                         calendar.add(calendar.DATE, -1);
                         Date date1 = calendar.getTime();
-
+                        int preSize = mDatas.size();
                         for (NewsItem item : newsItemDaoImp.findDate(date1)
                                 ) {
                             mDatas.add(item);
                         }
 //                        mDatas = mDatas
-                        addDataToAdapter();
+
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                         String dataFormat = sdf.format(date1);
                         String curDate = sdf.format(new Date());
                         if (dataFormat.equals(curDate)) {
                             fetchLeastHeaderNews();
+                            addDataToAdapter();
                         }
+                        // 告知已经修改数据
+                        adapter.notifyItemChanged(preSize);
                     }
                 },
                 new Response.ErrorListener() {
