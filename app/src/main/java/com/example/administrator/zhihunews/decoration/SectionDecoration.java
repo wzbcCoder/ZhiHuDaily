@@ -30,7 +30,8 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
     private int topGap;
     private Paint.FontMetrics fontMetrics;
     private DecorationCallback callback;
-    public static boolean aBoolean = true;
+    // true 是bai
+    public static boolean isSun = true;
 
     public SectionDecoration(Context context,DecorationCallback decorationCallback) {
 
@@ -40,7 +41,7 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
         this.callback = decorationCallback;
         paint = new Paint();
         //TODO:该颜色
-        if (aBoolean){
+        if (isSun){
             paint.setColor(res.getColor(R.color.listbg));
         }else {
             paint.setColor(res.getColor(R.color.listbgc));
@@ -50,7 +51,7 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(40);
-        if(aBoolean){
+        if(isSun){
             textPaint.setColor(Color.BLACK);
         }else{
             textPaint.setColor(Color.WHITE);

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,13 @@ import com.example.administrator.zhihunews.R;
 import com.example.administrator.zhihunews.decoration.SectionDecoration;
 
 import org.jsoup.Connection;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.io.File;
+
+import javax.xml.transform.sax.SAXResult;
 
 /**
  * Created by Administrator on 2018/11/28.
@@ -87,30 +95,62 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.i_son:
-                SectionDecoration.aBoolean = true;
+                SectionDecoration.isSun = true;
                 toolbar = (Toolbar) findViewById(R.id.toolbar);
                 toolbart = (Toolbar) findViewById(R.id.toolbart);
-                toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
-                toolbart.setBackgroundColor(Color.rgb(63, 81, 181));
-                relativeLayout = (RelativeLayout) findViewById(R.id.index);
-                relativeLayout.setBackgroundColor(Color.rgb(242, 241, 241));
-                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
-                linearLayout.setBackgroundColor(Color.WHITE);
-                indextextView = (TextView) findViewById(R.id.item_title);
-                indextextView.setBackgroundColor(Color.rgb(206, 205, 205));
+                if(toolbar != null && toolbart!=null){
+                    break;
+                }else if(toolbar != null){
+                    toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
+                    relativeLayout = (RelativeLayout) findViewById(R.id.index);
+                    relativeLayout.setBackgroundColor(Color.rgb(242, 241, 241));
+                    linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+                    linearLayout.setBackgroundColor(Color.WHITE);
+                    indextextView = (TextView) findViewById(R.id.item_title);
+                    indextextView.setTextColor(Color.BLACK);
+                }
+//                String asd = String.valueOf(getResources().getColor(R.color.black));
+//                String aaa = String.format(asd,R.color.listbg);
+//                toolbar = (Toolbar) findViewById(R.id.toolbar);
+//                toolbar.setBackgroundColor(Integer.parseInt(asd));
+
+
+//                toolbar = (Toolbar) findViewById(R.id.toolbar);
+//                toolbart = (Toolbar) findViewById(R.id.toolbart);
+//                toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
+//                toolbart.setBackgroundColor(Color.rgb(63, 81, 181));
+//                relativeLayout = (RelativeLayout) findViewById(R.id.index);
+//                relativeLayout.setBackgroundColor(Color.rgb(242, 241, 241));
+//                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+//                linearLayout.setBackgroundColor(Color.WHITE);
+//                indextextView = (TextView) findViewById(R.id.item_title);
+//                indextextView.setBackgroundColor(Color.rgb(206, 205, 205));
                 break;
             case R.id.i_moon:
-                SectionDecoration.aBoolean = false;
-                toolbar= (Toolbar) findViewById(R.id.toolbar);
-                toolbart= (Toolbar) findViewById(R.id.toolbart);
-                toolbar.setBackgroundColor(Color.rgb(242,241,241));
-                toolbart.setBackgroundColor(Color.rgb(242,241,241));
-                relativeLayout = (RelativeLayout) findViewById(R.id.index);
-                relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
-                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
-                linearLayout.setBackgroundColor(Color.rgb(108,108,108));
-                indextextView = (TextView) findViewById(R.id.item_title);
-                indextextView.setBackgroundColor(Color.rgb(206,205,205));
+                SectionDecoration.isSun = false;
+                toolbar = (Toolbar) findViewById(R.id.toolbar);
+                toolbart = (Toolbar) findViewById(R.id.toolbart);
+//                if(toolbar != null && toolbart!=null){
+//                    break;
+//                }else if(toolbar != null && toolbart==null){
+//                    toolbar.setBackgroundColor(Color.rgb(70,69,69));
+//                    relativeLayout = (RelativeLayout) findViewById(R.id.index);
+//                    relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
+//                    linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+//                    linearLayout.setBackgroundColor(Color.rgb(108,108,108));
+//                    indextextView = (TextView) findViewById(R.id.item_title);
+//                    indextextView.setTextColor(Color.rgb(206,205,205));
+//                }
+//                toolbar= (Toolbar) findViewById(R.id.toolbar);
+//                toolbart= (Toolbar) findViewById(R.id.toolbart);
+//                toolbar.setBackgroundColor(Color.rgb(242,241,241));
+//                toolbart.setBackgroundColor(Color.rgb(242,241,241));
+//                relativeLayout = (RelativeLayout) findViewById(R.id.index);
+//                relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
+//                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+//                linearLayout.setBackgroundColor(Color.rgb(108,108,108));
+//                indextextView = (TextView) findViewById(R.id.item_title);
+//                indextextView.setBackgroundColor(Color.rgb(206,205,205));
                 break;
             default:
                 break;
@@ -119,11 +159,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public void clickson(MenuItem item) {
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
-    }
+//    public void clickson(MenuItem item) {
+//        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
+//    }
 
 
 
@@ -151,12 +191,34 @@ public class BaseActivity extends AppCompatActivity {
 //        reload();
 //    }
 //
-    public void reload() {
-        Intent intent = getIntent();
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);//进入动画
-        finish();
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-        startActivity(intent);
+//    public void reload() {
+//        Intent intent = getIntent();
+//        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);//进入动画
+//        finish();
+//        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+//        startActivity(intent);
+//
+//    }
 
+    public void changeThemePage1() {
+        if(SectionDecoration.isSun = true){
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
+            relativeLayout = (RelativeLayout) findViewById(R.id.index);
+            relativeLayout.setBackgroundColor(Color.rgb(242, 241, 241));
+            linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+            linearLayout.setBackgroundColor(Color.WHITE);
+            indextextView = (TextView) findViewById(R.id.item_title);
+            indextextView.setBackgroundColor(Color.rgb(206, 205, 205));
+        }else{
+            toolbar= (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setBackgroundColor(Color.rgb(242,241,241));
+            relativeLayout = (RelativeLayout) findViewById(R.id.index);
+            relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
+            linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+            linearLayout.setBackgroundColor(Color.rgb(108,108,108));
+            indextextView = (TextView) findViewById(R.id.item_title);
+            indextextView.setBackgroundColor(Color.rgb(206,205,205));
+        }
     }
 }

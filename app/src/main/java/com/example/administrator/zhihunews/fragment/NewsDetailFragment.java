@@ -56,7 +56,6 @@ public class NewsDetailFragment extends BaseFragment {
 
     private void initView() {
         mDetail = (WebView) mActivity.findViewById(R.id.web_view_detail);
-
     }
 
     private void initData() {

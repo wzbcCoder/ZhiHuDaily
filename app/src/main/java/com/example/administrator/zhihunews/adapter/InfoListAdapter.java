@@ -2,16 +2,20 @@ package com.example.administrator.zhihunews.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhihunews.R;
+import com.example.administrator.zhihunews.activity.MainActivity;
 import com.example.administrator.zhihunews.db.model.NewsItem;
+import com.example.administrator.zhihunews.decoration.SectionDecoration;
 
 import java.util.ArrayList;
 
@@ -104,10 +108,24 @@ public class InfoListAdapter extends RecyclerView.Adapter<InfoListAdapter.InfoVi
         ImageView img;//显示的图片
         TextView headTitle;//头部标题
 
+        private  void  changeColor(View itemView){
+            Toolbar toolbar = (Toolbar) itemView.findViewById(R.id.toolbar);
+            Toolbar toolbart = (Toolbar) itemView.findViewById(R.id.toolbart);
+            if(SectionDecoration.isSun){
+               LinearLayout linearLayout = (LinearLayout)itemView.findViewById(R.id.base_swipe_item_container);
+                linearLayout.setBackgroundColor(itemView.getResources().getColor(R.color.white));
+            }
+            else {
+                LinearLayout linearLayout = (LinearLayout)itemView.findViewById(R.id.base_swipe_item_container);
+                linearLayout.setBackgroundColor(itemView.getResources().getColor(R.color.black));
+            }
+
+        }
         public InfoViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.item_title);
             img = (ImageView) itemView.findViewById(R.id.item_image);
+//            changeColor(itemView);
 //            headTitle = (TextView) itemView.findViewById(R.id.item_headtitle);
         }
     }
