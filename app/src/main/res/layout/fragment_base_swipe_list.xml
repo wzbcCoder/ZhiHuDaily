@@ -14,8 +14,8 @@
         android:id="@+id/base_swipe_item_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:padding="5dp">
 
         <!--<TextView-->
@@ -30,9 +30,9 @@
             android:id="@+id/item_title"
             android:layout_width="0dp"
             android:layout_height="100dp"
+            android:textColor="@color/black"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:textColor="@color/black"
             android:textSize="21sp" />
 
         <!--<ImageView-->
