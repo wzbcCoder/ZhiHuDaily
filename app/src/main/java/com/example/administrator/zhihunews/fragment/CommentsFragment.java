@@ -2,6 +2,7 @@ package com.example.administrator.zhihunews.fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,12 +12,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.administrator.zhihunews.R;
+import com.example.administrator.zhihunews.activity.MainActivity;
 import com.example.administrator.zhihunews.adapter.CommentAdapter;
 import com.example.administrator.zhihunews.app.ClintApplication;
 import com.example.administrator.zhihunews.db.model.Comment;
@@ -144,6 +147,8 @@ public class CommentsFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_comment, container, false);
          listView = (ListView) view.findViewById(R.id.comment_list);
+        MainActivity mainActivity = (MainActivity) mActivity;
+        mainActivity.setTitle("", 3);
 
 //         list.setAdapter(commentAdapter);
         //

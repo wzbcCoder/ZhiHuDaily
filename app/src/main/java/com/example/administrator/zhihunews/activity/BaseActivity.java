@@ -8,12 +8,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.TextViewCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,6 +28,10 @@ import com.example.administrator.zhihunews.decoration.SectionDecoration;
 
 import org.jsoup.Connection;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Administrator on 2018/11/28.
  */
@@ -32,12 +39,17 @@ import org.jsoup.Connection;
 public class BaseActivity extends AppCompatActivity {
     public Toolbar toolbar;
     public Toolbar toolbart;
+    public TextView disanyeText;
     public ClipData.Item item;
     public boolean aBoolean = true;
 
     private RelativeLayout relativeLayout;
     private LinearLayout linearLayout;
     private TextView indextextView;
+
+    private TextView tv_content;
+
+
 
 
     /**
@@ -55,6 +67,8 @@ public class BaseActivity extends AppCompatActivity {
                 toolbar= (Toolbar) findViewById(R.id.toolbar);
                 toolbar.setTitleTextColor(Color.WHITE);//标题字体颜色
                 toolbar.setTitle(title);
+                disanyeText = (TextView) findViewById(R.id.firstpage);
+                disanyeText.setText("首页");
                 setSupportActionBar(toolbar);//设置为actionbar
                 toolbar.setNavigationIcon(R.drawable.layer);
                 break;
@@ -62,6 +76,23 @@ public class BaseActivity extends AppCompatActivity {
                 toolbar= (Toolbar) findViewById(R.id.toolbart);
                 toolbar.setTitleTextColor(Color.WHITE);//标题字体颜色
                 toolbar.setTitle(title);
+                setSupportActionBar(toolbar);//设置为actionbar
+                toolbar.setNavigationIcon(R.drawable.back);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                        disanyeText = (TextView) findViewById(R.id.firstpage);
+                        disanyeText.setText("首页");
+                    }
+                });
+                break;
+            case 3:
+                toolbar= (Toolbar) findViewById(R.id.toolbar);
+                toolbar.setTitleTextColor(Color.WHITE);//标题字体颜色
+                toolbar.setTitle(title);
+                disanyeText = (TextView) findViewById(R.id.firstpage);
+                disanyeText.setText("评论区");
                 setSupportActionBar(toolbar);//设置为actionbar
                 toolbar.setNavigationIcon(R.drawable.back);
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -76,47 +107,48 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
+//        return true;
+//    }
 
-    //TODO menu点击事件
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.i_son:
-                SectionDecoration.aBoolean = true;
-                toolbar = (Toolbar) findViewById(R.id.toolbar);
-                toolbart = (Toolbar) findViewById(R.id.toolbart);
-                toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
-                toolbart.setBackgroundColor(Color.rgb(63, 81, 181));
-                relativeLayout = (RelativeLayout) findViewById(R.id.index);
-                relativeLayout.setBackgroundColor(Color.rgb(242, 241, 241));
-                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
-                linearLayout.setBackgroundColor(Color.WHITE);
-                indextextView = (TextView) findViewById(R.id.item_title);
-                indextextView.setBackgroundColor(Color.rgb(206, 205, 205));
-                break;
-            case R.id.i_moon:
-                SectionDecoration.aBoolean = false;
-                toolbar= (Toolbar) findViewById(R.id.toolbar);
-                toolbart= (Toolbar) findViewById(R.id.toolbart);
-                toolbar.setBackgroundColor(Color.rgb(242,241,241));
-                toolbart.setBackgroundColor(Color.rgb(242,241,241));
-                relativeLayout = (RelativeLayout) findViewById(R.id.index);
-                relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
-                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
-                linearLayout.setBackgroundColor(Color.rgb(108,108,108));
-                indextextView = (TextView) findViewById(R.id.item_title);
-                indextextView.setBackgroundColor(Color.rgb(206,205,205));
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
+//    //TODO menu点击事件
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.i_son:
+//                SectionDecoration.aBoolean = true;
+//                toolbar = (Toolbar) findViewById(R.id.toolbar);
+////                toolbart = (Toolbar) findViewById(R.id.toolbart);
+//                toolbar.setBackgroundColor(Color.rgb(63, 81, 181));
+////                toolbart.setBackgroundColor(Color.rgb(63, 81, 181));
+//                relativeLayout = (RelativeLayout) findViewById(R.id.index);
+//                relativeLayout.setBackgroundColor(Color.rgb(242, 241, 241));
+//                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+//                linearLayout.setBackgroundColor(Color.WHITE);
+//                indextextView = (TextView) findViewById(R.id.item_title);
+//                indextextView.setTextColor(Color.BLACK);
+//                break;
+//            case R.id.i_moon:
+//                SectionDecoration.aBoolean = false;
+//                toolbar= (Toolbar) findViewById(R.id.toolbar);
+////                toolbart= (Toolbar) findViewById(R.id.toolbart);
+//                toolbar.setBackgroundColor(Color.rgb(67,67,67));
+////                toolbart.setBackgroundColor(Color.rgb(242,241,241));
+//
+//                relativeLayout = (RelativeLayout) findViewById(R.id.index);
+//                relativeLayout.setBackgroundColor(Color.rgb(67,67,67));
+////                linearLayout = (LinearLayout) findViewById(R.id.base_swipe_item_container);
+////                linearLayout.setBackgroundColor(Color.rgb(108,108,108));
+////                indextextView = (TextView) findViewById(R.id.item_title);
+////                indextextView.setTextColor(Color.rgb(206,205,205));
+//                break;
+//            default:
+//                break;
+//        }
+//        return true;
+//    }
 
 
     public void clickson(MenuItem item) {
@@ -158,5 +190,24 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         startActivity(intent);
 
+    }
+
+
+    public void changeColor(){
+        ArrayList<Map<String, String>> houseRes = new ArrayList<>();
+
+        RecyclerView recy = (RecyclerView) findViewById(R.id.infolist);
+
+        for (int i = 0; i < recy.getChildCount(); i++) {
+//            Map<String, String> mDeviceHeaderMap = new HashMap<>();
+            LinearLayout layout = (LinearLayout) recy.getChildAt(i);
+            tv_content = (TextView) layout.findViewById(R.id.item_title);
+            LinearLayout tv_description = (LinearLayout)layout.findViewById(R.id.base_swipe_item_container);
+            tv_content.setTextColor(Color.rgb(206,205,205));
+
+//            mDeviceHeaderMap.put(tv_content.getText().toString(), tv_description.getText().toString());
+
+//            houseRes.add(mDeviceHeaderMap);
+        }
     }
 }

@@ -18,7 +18,7 @@ public class UiUtils {
             case 1:
                 return R.style.AppTheme;//白色主题
             case 2:
-                return R.style.AppTheme_NoActionBar;
+                return R.style.AppTheme;
             default:
                 return R.style.AppTheme;//默认白色
         }
